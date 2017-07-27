@@ -33,7 +33,7 @@ end
 
 ## Further future
 
-Features of a real bot.
+Features often needed by bots.
 
 - database
 - session
