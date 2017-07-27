@@ -37,6 +37,6 @@ Features of a real bot.
 
 - database
 - session
-- authority
+- access control
 - dynamically add functions
 - 
