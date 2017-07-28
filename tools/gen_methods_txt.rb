@@ -6,7 +6,7 @@ ans = methods.map { |method, decl|
   max_length = [params.keys.map(&:length).max || 0, method.length - 4].max
   patch = -> x { if x.is_a? Array and x.size > 1 then x.join('|') else x end }
   <<~EOF
-    #{"%-#{max_length + 4}s" % method} #{patch[ret].inspect.delete('"')}
+    #{"%-#{max_length + 4}s" % method} #{ret ? patch[ret].inspect.delete('"') : ''}
       #{params.map { |param, attr|
         "#{attr['optional'] ? ' ' : '*'} #{"%-#{max_length}s" % param} #{patch[attr['type']].inspect.delete('"')}"
       }.join("\n  ")}

@@ -1,22 +1,22 @@
-getMe User
-  
-
 getUpdates          [Update]
     offset          Integer
     limit           Integer
     timeout         Integer
     allowed_updates [String]
 
-setWebhook          nil
+setWebhook          
   * url             String
     certificate     InputFile
     max_connections Integer
     allowed_updates [String]
 
-deleteWebhook Boolean
+deleteWebhook True
   
 
 getWebhookInfo WebhookInfo
+  
+
+getMe User
   
 
 sendMessage                  Message
@@ -26,13 +26,13 @@ sendMessage                  Message
     disable_web_page_preview Boolean
     disable_notification     Boolean
     reply_to_message_id      Integer
-    reply_markup             ReplyMarkup
+    reply_markup             InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
 
 forwardMessage           Message
   * chat_id              Integer|String
   * from_chat_id         Integer|String
-  * message_id           Integer
     disable_notification Boolean
+  * message_id           Integer
 
 sendPhoto                Message
   * chat_id              Integer|String
@@ -40,17 +40,18 @@ sendPhoto                Message
     caption              String
     disable_notification Boolean
     reply_to_message_id  Integer
-    reply_markup         ReplyMarkup
+    reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
 
 sendAudio                Message
   * chat_id              Integer|String
   * audio                InputFile|String
     caption              String
     duration             Integer
+    performer            String
     title                String
     disable_notification Boolean
     reply_to_message_id  Integer
-    reply_markup         ReplyMarkup
+    reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
 
 sendDocument             Message
   * chat_id              Integer|String
@@ -58,15 +59,7 @@ sendDocument             Message
     caption              String
     disable_notification Boolean
     reply_to_message_id  Integer
-    reply_markup         ReplyMarkup
-
-sendSticker              Message
-  * chat_id              Integer|String
-  * sticker              InputFile|String
-    caption              String
-    disable_notification Boolean
-    reply_to_message_id  Integer
-    reply_markup         ReplyMarkup
+    reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
 
 sendVideo                Message
   * chat_id              Integer|String
@@ -75,10 +68,9 @@ sendVideo                Message
     width                Integer
     height               Integer
     caption              String
-    title                String
     disable_notification Boolean
     reply_to_message_id  Integer
-    reply_markup         ReplyMarkup
+    reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
 
 sendVoice                Message
   * chat_id              Integer|String
@@ -87,7 +79,16 @@ sendVoice                Message
     duration             Integer
     disable_notification Boolean
     reply_to_message_id  Integer
-    reply_markup         ReplyMarkup
+    reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
+
+sendVideoNote            
+  * chat_id              Integer|String
+  * video_note           InputFile|String
+    duration             Integer
+    length               Integer
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
 
 sendLocation             Message
   * chat_id              Integer|String
@@ -95,7 +96,7 @@ sendLocation             Message
   * longitude            Float
     disable_notification Boolean
     reply_to_message_id  Integer
-    reply_markup         ReplyMarkup
+    reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
 
 sendVenue                Message
   * chat_id              Integer|String
@@ -106,7 +107,7 @@ sendVenue                Message
     foursquare_id        String
     disable_notification Boolean
     reply_to_message_id  Integer
-    reply_markup         ReplyMarkup
+    reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
 
 sendContact              Message
   * chat_id              Integer|String
@@ -115,9 +116,9 @@ sendContact              Message
   * last_name            String
     disable_notification Boolean
     reply_to_message_id  Integer
-    reply_markup         ReplyMarkup
+    reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
 
-sendChatAction Boolean
+sendChatAction True
   * chat_id    Integer|String
   * action     String
 
@@ -129,16 +130,64 @@ getUserProfilePhotos UserProfilePhotos
 getFile     File
   * file_id String
 
-kickChatMember Boolean
+kickChatMember True
   * chat_id    Integer|String
   * user_id    Integer
+    until_date Integer
+
+unbanChatMember True
+  * chat_id     Integer|String
+  * user_id     Integer
+
+restrictChatMember            True
+  * chat_id                   Integer|String
+  * user_id                   Integer
+    until_date                Integer
+    can_send_messages         Boolean
+    can_send_media_messages   Boolean
+    can_send_other_messages   Boolean
+    can_add_web_page_previews Boolean
+
+promoteChatMember        True
+  * chat_id              Integer|String
+  * user_id              Integer
+    can_change_info      Boolean
+    can_post_messages    Boolean
+    can_edit_messages    Boolean
+    can_delete_messages  Boolean
+    can_invite_users     Boolean
+    can_restrict_members Boolean
+    can_pin_messages     Boolean
+    can_promote_members  Boolean
+
+exportChatInviteLink String
+  * chat_id          Integer|String
+
+setChatPhoto True
+  * chat_id  Integer|String
+  * photo    InputFile
+
+deleteChatPhoto True
+  * chat_id     Integer|String
+
+setChatTitle True
+  * chat_id  Integer|String
+  * title    String
+
+setChatDescription True
+  * chat_id        Integer|String
+    description    String
+
+pinChatMessage           True
+  * chat_id              Integer|String
+  * message_id           Integer
+    disable_notification Boolean
+
+unpinChatMessage True
+  * chat_id      Integer|String
 
 leaveChat   Boolean
   * chat_id Integer|String
-
-unbanChatMember Boolean
-  * chat_id     Integer|String
-  * user_id     Integer
 
 getChat     Chat
   * chat_id Integer|String
@@ -153,11 +202,74 @@ getChatMember ChatMember
   * chat_id   Integer|String
   * user_id   Integer
 
-answerCallbackQuery   Boolean
+answerCallbackQuery   True
   * callback_query_id String
+    text              Boolean
     show_alert        Boolean
     url               String
     cache_time        Integer
+
+editMessageText              Message|True
+    chat_id                  Integer|String
+    message_id               Integer
+    inline_message_id        String
+  * text                     String
+    parse_mode               String
+    disable_web_page_preview Boolean
+    reply_markup             InlineKeyboardMarkup
+
+editMessageCaption    Message|True
+    chat_id           Integer|String
+    message_id        Integer
+    inline_message_id String
+    caption           String
+    reply_markup      InlineKeyboardMarkup
+
+editMessageReplyMarkup Message|True
+    chat_id            Integer|String
+    message_id         Integer
+    inline_message_id  String
+    reply_markup       InlineKeyboardMarkup
+
+deleteMessage  True
+  * chat_id    Integer|String
+  * message_id Integer
+
+sendSticker              Message
+  * chat_id              Integer|String
+  * sticker              InputFile|String
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
+
+getStickerSet StickerSet
+  * name      String
+
+uploadStickerFile File
+  * user_id       Integer
+  * png_sticker   InputFile
+
+createNewStickerSet True
+  * name            String
+  * title           String
+  * png_sticker     InputFile|String
+  * emojis          String
+    contains_masks  Boolean
+    mask_position   MaskPosition
+
+addStickerToSet   True
+  * user_id       Integer
+  * name          String
+  * png_sticker   InputFile|String
+  * emojis        String
+    mask_position MaskPosition
+
+setStickerPositionInSet True
+  * sticker             String
+  * position            Integer
+
+deleteStickerFromSet True
+  * sticker          String
 
 answerInlineQuery       Boolean
   * inline_query_id     String
@@ -168,27 +280,38 @@ answerInlineQuery       Boolean
     switch_pm_text      String
     switch_pm_parameter String
 
-editMessageText              Message|Boolean
-  * text                     String
-    chat_id                  Integer|String
-    message_id               Integer
-    inline_message_id        String
-    parse_mode               String
-    disable_web_page_preview Boolean
-    reply_markup             InlineKeyboardMarkup
+sendInvoice               Message
+  * chat_id               Integer
+  * title                 String
+  * description           String
+  * payload               String
+  * provider_token        String
+  * start_parameter       String
+  * currency              String
+  * prices                [LabeledPrice]
+    photo_url             String
+    photo_size            Integer
+    photo_width           Integer
+    photo_height          Integer
+    need_name             Boolean
+    need_phone_number     Boolean
+    need_email            Boolean
+    need_shipping_address Boolean
+    is_flexible           Boolean
+    disable_notification  Boolean
+    reply_to_message_id   Integer
+    reply_markup          InlineKeyboardMarkup
 
-editMessageCaption    Message|Boolean
-    chat_id           Integer|String
-    message_id        Integer
-    inline_message_id String
-    caption           String
-    reply_markup      InlineKeyboardMarkup
+answerShippingQuery   True
+  * shipping_query_id String
+  * ok                Boolean
+    shipping_options  [ShippingOption]
+    error_message     String
 
-editMessageReplyMarkup Message|Boolean
-    chat_id            Integer|String
-    message_id         Integer
-    inline_message_id  String
-    reply_markup       InlineKeyboardMarkup
+answerPreCheckoutQuery    True
+  * pre_checkout_query_id String
+  * ok                    Boolean
+    error_message         String
 
 sendGame                 Message
   * chat_id              Integer
@@ -197,7 +320,7 @@ sendGame                 Message
     reply_to_message_id  Integer
     reply_markup         InlineKeyboardMarkup
 
-setGameScore             Message|Boolean
+setGameScore             Message|True
   * user_id              Integer
   * score                Integer
     force                Boolean
