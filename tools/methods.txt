@@ -1,0 +1,213 @@
+getMe User
+  
+
+getUpdates          [Update]
+    offset          Integer
+    limit           Integer
+    timeout         Integer
+    allowed_updates [String]
+
+setWebhook          nil
+  * url             String
+    certificate     InputFile
+    max_connections Integer
+    allowed_updates [String]
+
+deleteWebhook Boolean
+  
+
+getWebhookInfo WebhookInfo
+  
+
+sendMessage                  Message
+  * chat_id                  Integer|String
+  * text                     String
+    parse_mode               String
+    disable_web_page_preview Boolean
+    disable_notification     Boolean
+    reply_to_message_id      Integer
+    reply_markup             ReplyMarkup
+
+forwardMessage           Message
+  * chat_id              Integer|String
+  * from_chat_id         Integer|String
+  * message_id           Integer
+    disable_notification Boolean
+
+sendPhoto                Message
+  * chat_id              Integer|String
+  * photo                InputFile|String
+    caption              String
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         ReplyMarkup
+
+sendAudio                Message
+  * chat_id              Integer|String
+  * audio                InputFile|String
+    caption              String
+    duration             Integer
+    title                String
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         ReplyMarkup
+
+sendDocument             Message
+  * chat_id              Integer|String
+  * document             InputFile|String
+    caption              String
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         ReplyMarkup
+
+sendSticker              Message
+  * chat_id              Integer|String
+  * sticker              InputFile|String
+    caption              String
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         ReplyMarkup
+
+sendVideo                Message
+  * chat_id              Integer|String
+  * video                InputFile|String
+    duration             Integer
+    width                Integer
+    height               Integer
+    caption              String
+    title                String
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         ReplyMarkup
+
+sendVoice                Message
+  * chat_id              Integer|String
+  * voice                InputFile|String
+    caption              String
+    duration             Integer
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         ReplyMarkup
+
+sendLocation             Message
+  * chat_id              Integer|String
+  * latitude             Float
+  * longitude            Float
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         ReplyMarkup
+
+sendVenue                Message
+  * chat_id              Integer|String
+  * latitude             Float
+  * longitude            Float
+  * title                String
+  * address              String
+    foursquare_id        String
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         ReplyMarkup
+
+sendContact              Message
+  * chat_id              Integer|String
+  * phone_number         String
+  * first_name           String
+  * last_name            String
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         ReplyMarkup
+
+sendChatAction Boolean
+  * chat_id    Integer|String
+  * action     String
+
+getUserProfilePhotos UserProfilePhotos
+  * user_id          Integer
+    offset           Integer
+    limit            Integer
+
+getFile     File
+  * file_id String
+
+kickChatMember Boolean
+  * chat_id    Integer|String
+  * user_id    Integer
+
+leaveChat   Boolean
+  * chat_id Integer|String
+
+unbanChatMember Boolean
+  * chat_id     Integer|String
+  * user_id     Integer
+
+getChat     Chat
+  * chat_id Integer|String
+
+getChatAdministrators [ChatMember]
+  * chat_id           Integer|String
+
+getChatMembersCount Integer
+  * chat_id         Integer|String
+
+getChatMember ChatMember
+  * chat_id   Integer|String
+  * user_id   Integer
+
+answerCallbackQuery   Boolean
+  * callback_query_id String
+    show_alert        Boolean
+    url               String
+    cache_time        Integer
+
+answerInlineQuery       Boolean
+  * inline_query_id     String
+  * results             [InlineQueryResult]
+    cache_time          Integer
+    is_personal         Boolean
+    next_offset         String
+    switch_pm_text      String
+    switch_pm_parameter String
+
+editMessageText              Message|Boolean
+  * text                     String
+    chat_id                  Integer|String
+    message_id               Integer
+    inline_message_id        String
+    parse_mode               String
+    disable_web_page_preview Boolean
+    reply_markup             InlineKeyboardMarkup
+
+editMessageCaption    Message|Boolean
+    chat_id           Integer|String
+    message_id        Integer
+    inline_message_id String
+    caption           String
+    reply_markup      InlineKeyboardMarkup
+
+editMessageReplyMarkup Message|Boolean
+    chat_id            Integer|String
+    message_id         Integer
+    inline_message_id  String
+    reply_markup       InlineKeyboardMarkup
+
+sendGame                 Message
+  * chat_id              Integer
+  * game_short_name      String
+    disable_notification Boolean
+    reply_to_message_id  Integer
+    reply_markup         InlineKeyboardMarkup
+
+setGameScore             Message|Boolean
+  * user_id              Integer
+  * score                Integer
+    force                Boolean
+    disable_edit_message Boolean
+    chat_id              Integer
+    message_id           Integer
+    inline_message_id    String
+
+getGameHighScores     [GameHighScore]
+  * user_id           Integer
+    chat_id           Integer
+    message_id        Integer
+    inline_message_id String
