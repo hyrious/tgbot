@@ -4,7 +4,7 @@ getUpdates          [Update]
     timeout         Integer
     allowed_updates [String]
 
-setWebhook          
+setWebhook          True
   * url             String
     certificate     InputFile
     max_connections Integer
@@ -81,7 +81,7 @@ sendVoice                Message
     reply_to_message_id  Integer
     reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
 
-sendVideoNote            
+sendVideoNote            Message
   * chat_id              Integer|String
   * video_note           InputFile|String
     duration             Integer
