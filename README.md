@@ -1,4 +1,4 @@
-# `Telegram::Bot`
+# `Tgbot`
 
 A tiny but easy-to-use wrapper of [Telegram Bot API](https://core.telegram.org/bots/api).
 
@@ -7,8 +7,8 @@ It's still under experiment, not ready for use.
 ## `future.rb`
 
 ```ruby
-# `Telegram::Bot.run' will start a loop until `Interrupt (Ctrl+C)' occured
-Telegram::Bot.run TOKEN, proxy: 'https://127.0.0.1:1080' do |bot|
+# `Tgbot.run' will start a loop until `Interrupt (Ctrl+C)' occured
+Tgbot.run TOKEN, proxy: 'https://127.0.0.1:1080' do |bot|
   bot.start do # once
     bot.ok "this is @#{bot.first_name}, sir."
   end
