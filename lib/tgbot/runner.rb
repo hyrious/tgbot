@@ -1,7 +1,7 @@
 require 'json'
 require 'ostruct'
-require_relative 'core'
-require_relative 'update'
+require 'tgbot/core'
+require 'tgbot/update'
 
 module Tgbot
   class Runner
@@ -15,11 +15,12 @@ module Tgbot
     def mainloop
       loop do
         update_updates
-        @updates.each { |update| yield update; update.life -= 1 }
+        @updates.each { |update| yield update }
       end
     end
     def update_updates
       @updates.delete_if(&:done?)
+      @updates.each { |u| u.life -= 1 }
       x = x
       t = time { x = @bot.get_updates offset: @offset + 1, limit: 7, timeout: @timeout }
       case

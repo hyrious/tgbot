@@ -6,6 +6,9 @@ module Tgbot
       @type = get_type
       @life = 1
     end
+    def id
+      @update.update_id
+    end
     def done!
       @life = 0
     end
@@ -46,5 +49,10 @@ module Tgbot
     def method_missing(field)
       @update[field]
     end
+    def inspect
+      "#<Update ##{id} #{@type}=#{@update[@type]}>"
+    end
+    alias to_str inspect
+    alias to_s inspect
   end
 end

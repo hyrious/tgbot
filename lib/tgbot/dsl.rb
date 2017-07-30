@@ -1,5 +1,4 @@
-require_relative 'core'
-require_relative 'runner'
+require 'tgbot/runner'
 
 module Tgbot
   class DSL
@@ -14,6 +13,12 @@ module Tgbot
     def finish(&blk)
       @procs[:finish] = blk
     end
+    def before(&blk)
+      @procs[:before] = blk
+    end
+    def after(&blk)
+      @procs[:after] = blk
+    end
     def on(regex, &blk)
       @procs[:command][regex] = blk
     end
@@ -23,10 +28,12 @@ module Tgbot
       @procs[:start]&.call
       begin
         @runner.mainloop do |update|
+          @procs[:before]&.call update
           @procs[:command].each do |key, blk|
             x = update.text&.match key
             blk.call x, update if x
           end
+          @procs[:after]&.call update
         end
       rescue Interrupt
         @procs[:finish]&.call

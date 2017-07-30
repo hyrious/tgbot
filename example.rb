@@ -1,10 +1,11 @@
+require 'tgbot'
 
 TOKEN = 
 
 Tgbot.run TOKEN, proxy: 'https://127.0.0.1:1080' do |bot|
 
   bot.start do
-    puts "yes, master. this is #{bot.name}"
+    puts "this is #{bot.name}, master."
   end
   bot.finish do
     puts "byebye."
@@ -14,6 +15,12 @@ Tgbot.run TOKEN, proxy: 'https://127.0.0.1:1080' do |bot|
   end
   bot.on(/echo\s(.+)$/) do |matched, update|
     update.reply_message matched[1]
+  end
+  bot.before do |update|
+    puts "Processing ##{update.id}"
+  end
+  bot.after do |update|
+    puts "[ #{update.done? ? 'O' : 'X'} ] ##{update.id}"
   end
 
 end
