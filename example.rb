@@ -1,26 +1,34 @@
+require './helper'
+save_pid
 require 'tgbot'
+@garage = load_data.shuffle
 
 TOKEN = 
-
 Tgbot.run TOKEN, proxy: 'https://127.0.0.1:1080' do |bot|
 
   bot.start do
-    puts "this is #{bot.name}, master."
+    log "this is \e[33m#{bot.name}\e[32m, master.", 2
   end
   bot.finish do
-    puts "byebye."
+    log "byebye.", 1
   end
-  bot.on(/roll\s+(\d+)/) do |matched, update|
-    update.reply_message String(rand _ = Integer(matched[1]) rescue 100)
-  end
-  bot.on(/echo\s(.+)$/) do |matched, update|
-    update.reply_message matched[1]
+  bot.get 'drive' do |x, update|
+    pic = @garage.pop
+    log ">> Sending #{File.basename(pic)} to @#{update.message.from.username} ##{update.id}", 6
+    update.reply_photo pic, caption: File.basename(pic, '.*')
   end
   bot.before do |update|
-    puts "Processing ##{update.id}"
+    log ">> Processing ##{update.id} #{bot.timeout}"
   end
   bot.after do |update|
-    puts "[ #{update.done? ? 'O' : 'X'} ] ##{update.id}"
+    if update.done?
+      log "=> Success ##{update.id}", 2
+    else
+      log "?> Retry ##{update.id}", 3
+    end
   end
 
 end
+
+save_data @garage
+delete_pid
