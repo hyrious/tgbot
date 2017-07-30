@@ -29,6 +29,7 @@ module Tgbot
       begin
         @runner.mainloop do |update|
           @procs[:before]&.call update
+          update.done = true
           @procs[:command].each do |key, blk|
             x = update.text&.match key
             blk.call x, update if x

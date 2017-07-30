@@ -60,8 +60,7 @@ module Tgbot
       meth_body = METHODS[camelized_meth]
       super unless meth_body
       ret, params = meth_body.values_at 'ret', 'params'
-      kwargs = JSON.parse JSON.generate kwargs
-      check_params! kwargs, params
+      check_params! (JSON.parse JSON.generate kwargs), params
       call camelized_meth, kwargs
     end
 

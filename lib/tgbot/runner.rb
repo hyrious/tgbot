@@ -14,13 +14,13 @@ module Tgbot
     end
     def mainloop
       loop do
+        @updates.each { |u| u.count += 1 }
         update_updates
         @updates.each { |update| yield update }
       end
     end
     def update_updates
       @updates.delete_if(&:done?)
-      @updates.each { |u| u.life -= 1 }
       x = x
       t = time { x = @bot.get_updates offset: @offset + 1, limit: 7, timeout: @timeout }
       case
