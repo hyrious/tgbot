@@ -38,16 +38,18 @@ module Tgbot
       end
     end
     def method_missing(meth, **kwargs)
-      meth = camelize meth
-      meth_body = METHODS[meth]
+      camelized_meth = camelize meth
+      meth_body = METHODS[camelized_meth]
       super unless meth_body
       ret, params = meth_body.values_at 'ret', 'params'
       kwargs = JSON.parse JSON.generate kwargs
       check_params! kwargs, params
-      call meth, kwargs
+      call camelized_meth, kwargs
     end
     def call meth, kwargs
       JSON.parse @conn.post("/bot#{@token}/#{meth}", kwargs).body
+    rescue
+      {}
     end
     def check_params! kwargs, params
       params.each do |param, info|
@@ -75,6 +77,8 @@ module Tgbot
       end
       if type[0] == '['
         return arg.is_a?(Array) ? arg.all? { |a| check_type a, type[1..-2] } : false
+      elsif type.include? '|'
+        return type.split('|').any? { |t| check_type arg, t }
       end
       return false unless TYPES[type]
       check_params(arg, TYPES[type])
@@ -84,6 +88,12 @@ module Tgbot
       true
     rescue
       false
+    end
+    def get_types
+      TYPES.keys.map(&:to_sym)
+    end
+    def get_methods
+      METHODS.keys.map { |e| underscore e }.map(&:to_sym)
     end
     def underscore str
       str.gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
