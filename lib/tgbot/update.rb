@@ -19,6 +19,12 @@ module Tgbot
     def text
       @update[@type].text
     end
+    def done!
+      @done = true
+    end
+    def retry n = 1
+      @done = false if @count < n
+    end
     def send_message(text = nil, **kwargs)
       return unless chat_id
       return unless text = text || kwargs.delete(:text)
