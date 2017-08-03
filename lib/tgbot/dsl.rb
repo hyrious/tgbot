@@ -35,7 +35,7 @@ module Tgbot
           update.done = true
           @procs[:command].each do |key, blk|
             x = update.text&.match key
-            blk.call x, update if x
+            update.instance_exec(x, &blk) if x
           end
           @procs[:after]&.call update
         end

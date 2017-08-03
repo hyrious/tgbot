@@ -37,6 +37,7 @@ module Tgbot
         chat_id: chat_id, text: text, 
         reply_to_message_id: @update[@type].message_id, **kwargs)
     end
+    alias reply reply_message
     %i(photo audio document video voice video_note).each do |name|
       class_eval %{
         def send_#{name}(#{name} = nil, **kwargs)
