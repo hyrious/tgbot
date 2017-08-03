@@ -16,12 +16,6 @@ See [example.rb](example.rb).
 
 - improve DSL
 
-## Further future
+## Contribute
 
-Features often needed by bots.
-
-- database
-- session
-- access control
-- dynamically add functions
-- 
+PRs/issues are welcome.

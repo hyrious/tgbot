@@ -42,7 +42,7 @@ module Tgbot
       rescue Interrupt
         @procs[:finish]&.call
       rescue => e
-        puts $!
+        puts e
         puts e.backtrace
         retry
       end
