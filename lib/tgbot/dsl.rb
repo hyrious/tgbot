@@ -19,10 +19,13 @@ module Tgbot
     def after(&blk)
       @procs[:after] = blk
     end
-    def on(regex, &blk)
-      @procs[:command][regex] = blk
+    def on(*regexes, &blk)
+      regexes.each { |regex| @procs[:command][regex] = blk }
     end
     alias get on
+    def alias(ori, *args)
+      args.each { |regex| @procs[:command][regex] = @procs[:command][ori] }
+    end
     def run
       yield self if block_given?
       @procs[:start]&.call
