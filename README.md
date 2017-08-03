@@ -1,4 +1,4 @@
-# `Tgbot`
+# Tgbot
 
 [![Gem Version](https://badge.fury.io/rb/tgbot.svg)](https://badge.fury.io/rb/tgbot)
 
@@ -15,6 +15,9 @@ See [example.rb](example.rb).
 ## Todo
 
 - improve DSL
+- add sqlite, then
+  + add session
+  + add privilege
 
 ## Contribute
 
