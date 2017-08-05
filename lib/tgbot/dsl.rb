@@ -42,8 +42,7 @@ module Tgbot
       rescue Interrupt
         @procs[:finish]&.call
       rescue => e
-        puts e
-        puts e.backtrace
+        puts e.backtrace.unshift(e.to_s).join("\n")
         retry
       end
     end
