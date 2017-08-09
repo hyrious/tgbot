@@ -53,4 +53,7 @@ module Tgbot
   def self.run(token, **opts, &blk)
     DSL.new(token, **opts).run(&blk)
   end
+  def self.new(token, **opts)
+    DSL.new(token, **opts)
+  end
 end
