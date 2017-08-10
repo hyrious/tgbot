@@ -10,7 +10,7 @@ A tiny but easy-to-use wrapper of [Telegram Bot API](https://core.telegram.org/b
 
 ## Usage
 
-See [example.rb](example.rb).
+See [example.rb](example.rb) or [usage.md](usage.md).
 
 ## Todo
 

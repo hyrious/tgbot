@@ -68,7 +68,7 @@ Tgbot.run TOKEN, proxy: 'https://127.0.0.1:1080' do |bot|
 
   bot.before do |update|
     log ">> Processing ##{update.id}"
-    log "@#{update.message&.from.username}: #{update.text}", 3
+    log "@#{update.message&.from&.first_name}: #{update.text}", 3
   end
   bot.after do |update|
     if update.done?
@@ -101,7 +101,7 @@ Tgbot.run TOKEN, proxy: 'https://127.0.0.1:1080' do |bot|
     send_message Array.new(text&.match(/\d+/)&.to_s.to_i || 1){ ['🌞', '🌚'].sample }.join
   end
   bot.get 'roll' do
-    send_message rand(text&.match(/\d+/)&.to_s.to_i || 100).to_s
+    send_message rand(text&.match(/\d+/)&.to_s.to_i.nonzero? || 100).to_s
   end
 
 end
