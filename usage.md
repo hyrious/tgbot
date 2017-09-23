@@ -96,4 +96,4 @@ Params and returns are Hash.
 - Edit [types.txt](tools/types.txt) or [methods.txt](tools/methods.txt).
 - `rake json`
 
-Current version of Bot API: 3.2.
+Current version of Bot API: 3.3.

@@ -21,6 +21,7 @@ WebhookInfo
 
 User
   * id            Integer
+  * is_bot        Boolean
   * first_name    String
     last_name     String
     username      String
@@ -37,6 +38,7 @@ Chat
     photo                          ChatPhoto
     description                    String
     invite_link                    String
+    pinned_message                 Message
 
 Message
   * message_id              Integer

@@ -1,7 +1,7 @@
 # Tgbot
 
 [![Gem Version](https://badge.fury.io/rb/tgbot.svg)](https://badge.fury.io/rb/tgbot)
-![Bot API Version](https://img.shields.io/badge/Bot%20API-3.2-blue.svg?style=flat-square)
+![Bot API Version](https://img.shields.io/badge/Bot%20API-3.3-blue.svg?style=flat-square)
 ![](https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat-square)
 
 A tiny but easy-to-use wrapper of [Telegram Bot API](https://core.telegram.org/bots/api).
@@ -14,12 +14,7 @@ A tiny but easy-to-use wrapper of [Telegram Bot API](https://core.telegram.org/b
 
 See [example.rb](example.rb) or [usage.md](usage.md).
 
-## Todo
-
-- improve DSL
-- add sqlite, then
-  + add session
-  + add privilege
+**Ideas wanted.**
 
 ## Contribute
 
