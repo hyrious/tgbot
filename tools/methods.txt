@@ -94,9 +94,24 @@ sendLocation             Message
   * chat_id              Integer|String
   * latitude             Float
   * longitude            Float
+    live_period          Integer
     disable_notification Boolean
     reply_to_message_id  Integer
     reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
+
+editMessageLiveLocation Message|True
+    chat_id             Integer|String
+    message_id          Integer
+    inline_message_id   String
+  * latitude            Float
+  * longitude           Float
+    reply_markup        InlineKeyboardMarkup
+
+stopMessageLiveLocation Message|True
+    chat_id             Integer|String
+    message_id          Integer
+    inline_message_id   String
+    reply_markup        InlineKeyboardMarkup
 
 sendVenue                Message
   * chat_id              Integer|String
@@ -201,6 +216,13 @@ getChatMembersCount Integer
 getChatMember ChatMember
   * chat_id   Integer|String
   * user_id   Integer
+
+setChatStickerSet    True
+  * chat_id          Integer|String
+  * sticker_set_name String
+
+deleteChatStickerSet True
+  * chat_id          Integer|String
 
 answerCallbackQuery   True
   * callback_query_id String

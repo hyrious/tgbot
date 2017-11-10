@@ -53,6 +53,7 @@ Message
     edit_date               Integer
     text                    String
     entities                [MessageEntity]
+    caption_entities        [MessageEntity]
     audio                   Audio
     document                Document
     game                    Game
