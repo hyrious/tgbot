@@ -90,6 +90,12 @@ sendVideoNote            Message
     reply_to_message_id  Integer
     reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
 
+sendMediaGroup           [Message]
+  * chat_id              Integer|String
+  * media                [InputMedia]
+    disable_notification Boolean
+    reply_to_message_id  Integer
+
 sendLocation             Message
   * chat_id              Integer|String
   * latitude             Float
@@ -311,6 +317,7 @@ sendInvoice               Message
   * start_parameter       String
   * currency              String
   * prices                [LabeledPrice]
+    provider_data         String
     photo_url             String
     photo_size            Integer
     photo_width           Integer

@@ -222,6 +222,14 @@ ResponseParameters
     migrate_to_chat_id Integer
     retry_after        Integer
 
+InputMedia
+  * type     String
+  * media    String
+    caption  String
+    width    Integer
+    height   Integer
+    duration Integer
+
 InputFile
   
 

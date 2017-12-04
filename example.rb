@@ -6,7 +6,7 @@ require 'tgbot'
 Garage = load_data.shuffle
 Cache = {}
 TOKEN = 
-Tgbot.run TOKEN, proxy: 'https://127.0.0.1:1080' do |bot|
+Tgbot.run TOKEN, proxy: 'http://127.0.0.1:1080' do |bot|
 
   bot.start do
     log "\e[33m#{bot.name}\e[32m, at your service.", 2
