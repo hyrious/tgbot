@@ -80,6 +80,7 @@ Message
     pinned_message          Message
     invoice                 Invoice
     successful_payment      SuccessfulPayment
+    connected_website       String
 
 MessageEntity
   * type   String
@@ -223,12 +224,14 @@ ResponseParameters
     retry_after        Integer
 
 InputMedia
-  * type     String
-  * media    String
-    caption  String
-    width    Integer
-    height   Integer
-    duration Integer
+  * type               String
+  * media              String
+    caption            String
+    parse_mode         String
+    width              Integer
+    height             Integer
+    duration           Integer
+    supports_streaming Boolean
 
 InputFile
   
@@ -285,6 +288,7 @@ InlineQueryResultPhoto
     title                 String
     description           String
     caption               String
+    parse_mode            String
     reply_markup          InlineKeyboardMarkup
     input_message_content InputMessageContent
 
@@ -297,6 +301,7 @@ InlineQueryResultGif
     thumb_url             String
     title                 String
     caption               String
+    parse_mode            String
     reply_markup          InlineKeyboardMarkup
     input_message_content InputMessageContent
 
@@ -310,6 +315,7 @@ InlineQueryResultMpeg4Gif
   * thumb_url             String
     title                 String
     caption               String
+    parse_mode            String
     reply_markup          InlineKeyboardMarkup
     input_message_content InputMessageContent
 
@@ -321,6 +327,7 @@ InlineQueryResultVideo
   * thumb_url             String
   * title                 String
     caption               String
+    parse_mode            String
     video_width           Integer
     video_height          Integer
     video_duration        Integer
@@ -334,6 +341,7 @@ InlineQueryResultAudio
   * audio_url             String
   * title                 String
     caption               String
+    parse_mode            String
     performer             String
     audio_duration        Integer
     reply_markup          InlineKeyboardMarkup
@@ -345,6 +353,7 @@ InlineQueryResultVoice
   * voice_url             String
   * title                 String
     caption               String
+    parse_mode            String
     voice_duration        Integer
     reply_markup          InlineKeyboardMarkup
     input_message_content InputMessageContent
@@ -354,6 +363,7 @@ InlineQueryResultDocument
   * id                    String
   * title                 String
     caption               String
+    parse_mode            String
   * document_url          String
   * mime_type             String
     description           String
@@ -412,6 +422,7 @@ InlineQueryResultCachedPhoto
   * id                    String
   * photo_file_id         String
     title                 String
+    parse_mode            String
     description           String
     caption               String
     reply_markup          InlineKeyboardMarkup
@@ -423,6 +434,7 @@ InlineQueryResultCachedGif
   * gif_file_id           String
     title                 String
     caption               String
+    parse_mode            String
     reply_markup          InlineKeyboardMarkup
     input_message_content InputMessageContent
 
@@ -432,6 +444,7 @@ InlineQueryResultCachedMpeg4Gif
   * mpeg4_file_id         String
     title                 String
     caption               String
+    parse_mode            String
     reply_markup          InlineKeyboardMarkup
     input_message_content InputMessageContent
 
@@ -449,6 +462,7 @@ InlineQueryResultCachedDocument
   * document_file_id      String
     description           String
     caption               String
+    parse_mode            String
     reply_markup          InlineKeyboardMarkup
     input_message_content InputMessageContent
 
@@ -459,6 +473,7 @@ InlineQueryResultCachedVideo
   * title                 String
     description           String
     caption               String
+    parse_mode            String
     reply_markup          InlineKeyboardMarkup
     input_message_content InputMessageContent
 
@@ -468,6 +483,7 @@ InlineQueryResultCachedVoice
   * voice_file_id         String
   * title                 String
     caption               String
+    parse_mode            String
     reply_markup          InlineKeyboardMarkup
     input_message_content InputMessageContent
 
@@ -476,6 +492,7 @@ InlineQueryResultCachedAudio
   * id                    String
   * audio_file_id         String
     caption               String
+    parse_mode            String
     reply_markup          InlineKeyboardMarkup
     input_message_content InputMessageContent
 

@@ -38,6 +38,7 @@ sendPhoto                Message
   * chat_id              Integer|String
   * photo                InputFile|String
     caption              String
+    parse_mode           String
     disable_notification Boolean
     reply_to_message_id  Integer
     reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
@@ -46,6 +47,7 @@ sendAudio                Message
   * chat_id              Integer|String
   * audio                InputFile|String
     caption              String
+    parse_mode           String
     duration             Integer
     performer            String
     title                String
@@ -57,6 +59,7 @@ sendDocument             Message
   * chat_id              Integer|String
   * document             InputFile|String
     caption              String
+    parse_mode           String
     disable_notification Boolean
     reply_to_message_id  Integer
     reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
@@ -68,6 +71,8 @@ sendVideo                Message
     width                Integer
     height               Integer
     caption              String
+    parse_mode           String
+    supports_streaming   Boolean
     disable_notification Boolean
     reply_to_message_id  Integer
     reply_markup         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply
@@ -76,6 +81,7 @@ sendVoice                Message
   * chat_id              Integer|String
   * voice                InputFile|String
     caption              String
+    parse_mode           String
     duration             Integer
     disable_notification Boolean
     reply_to_message_id  Integer
@@ -251,6 +257,7 @@ editMessageCaption    Message|True
     message_id        Integer
     inline_message_id String
     caption           String
+    parse_mode        String
     reply_markup      InlineKeyboardMarkup
 
 editMessageReplyMarkup Message|True
