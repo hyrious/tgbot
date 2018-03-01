@@ -74,8 +74,6 @@ bot.alias 'cuxia', 'woc', 'wodemaya'
 - after: do something with every `Update` after processing.
 - on/get: match text and execute code in `Update` instance.
 
-
-
 As you can see, the dsl is still weak. Wish for your idea!
 
 ### Call Bot API
