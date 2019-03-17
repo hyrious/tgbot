@@ -1,5 +1,5 @@
 require 'tgbot/version'
-require 'tgbot/core'
-require 'tgbot/update'
-require 'tgbot/runner'
-require 'tgbot/dsl'
+
+module Tgbot
+  # code goes here...
+end

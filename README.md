@@ -12,9 +12,13 @@ A tiny but easy-to-use wrapper of [Telegram Bot API](https://core.telegram.org/b
 
 ## Usage
 
-See [example.rb](example.rb) or [usage.md](usage.md).
-
-**Ideas wanted.**
+```ruby
+Tgbot.run TOKEN, proxy: 'http://127.0.0.1:1080' do
+  on 'start' do
+    reply '#{name}, at your service.'
+  end
+end
+```
 
 ## Contribute
 

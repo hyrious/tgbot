@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["hyrious@outlook.com"]
 
   spec.summary       = 'Telegram Bot API'
-  spec.description   = 'Telegram Bot API Wrapper'
+  spec.description   = 'A deadly simple Telegram Bot API wrapper.'
   spec.homepage      = 'https://github.com/hyrious/tgbot'
   spec.license       = "MIT"
 
@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
 
-  spec.add_dependency 'faraday'
+  spec.add_dependency 'http'
   spec.add_dependency 'mimemagic'
-  spec.required_ruby_version = '>= 2.4.0'
+  spec.required_ruby_version = '>= 2.6.0'
 end
