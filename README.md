@@ -65,20 +65,18 @@ finish do
 end
 ```
 
-### `on pattern=nil, **options do (block) end`
+### `on pattern=nil, **options do |match_data, update, task| (block) end`
 
 Match pattern and do something.
 
 | argument | type | notes | example |
 |----------|------|-------|---------|
-| pattern | `nil` | match all | `on do ... end` |
-| - | `String` \| `Regexp` | match bot command<sup>1</sup> | `/^r(\d*)d(\d*)/` |
+| pattern | `nil` | match all (including inline query etc.) | `on do ... end` |
+| - | `String` \| `Regexp` | match all text<sup>1</sup> | `/^r(\d*)d(\d*)(?:\+(\d*))?/` |
 
-bot command<sup>1</sup>: roughly from `message.scan(/\/(\w+).+/)`
+<sup>1</sup>: for convenience, the bot's `@username` is trimmed for easilier matching.
 
-e.g. `"hey bot, /r3d6@mybot lol" => ["/r3d6 lol"] => #<MatchData "/r3d6" 1:"3" 2:"6">`.
-
-note: for convenience, the bot's `@username` is trimmed for easilier matching.
+e.g. `"hey bot, /r3d6@mybot+1 lol" =>  #<MatchData "/r3d6+1" 1:"3" 2:"6" 3:"1">`.
 
 | option | type | notes | example |
 |--------|------|-------|---------|
