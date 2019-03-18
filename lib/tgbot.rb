@@ -1,6 +1,7 @@
 require 'tgbot/version'
 
 require 'http'
+require 'mimemagic'
 require 'ostruct'
 require 'json'
 require 'psych'
@@ -76,7 +77,7 @@ class Tgbot
 
     def match pattern
       return nil if pattern.nil? || text.nil?
-      pattern.match(text)
+      text.match(pattern)
     end
 
     def message
@@ -84,15 +85,31 @@ class Tgbot
     end
 
     def text
-      message&.text
+      message&.text&.gsub(/(\/\w+)(@\w+)/, '\1')
     end
 
     def reply *things, media: true, style: nil, **options
+      meth = :send_message
       payload = { chat_id: message&.chat.id }
       things.each do |x|
-        case x
-        when String
-          payload[:text] = x
+        if IO === x
+          magic = MimeMagic.by_magic(x)
+          case
+          when magic.audio?
+            meth = :send_audio
+            payload[:audio] = x
+          when magic.image?
+            meth = :send_photo
+            payload[:photo] = x
+          when magic.video?
+            meth = :send_video
+            payload[:video] = x
+          else
+            meth = :send_document
+            payload[:document] = x
+          end
+        else
+          payload[:text] = x.to_s
           payload[:parse_mode] = 'Markdown'
         end
       end
@@ -114,7 +131,7 @@ class Tgbot
           payload[:reply_to_message_id] = message_id
         end
       end
-      send_message payload
+      @bot.send meth, payload
     end
 
     def message_id
@@ -134,12 +151,14 @@ class Tgbot
     instance_exec(self, &@start) if @start
     loop do
       while x = @updates.shift
-        u = Update.new(self, x)
-        @tasks = @commands.select { |(pattern, *)| u.match? pattern }
+        u = Update === x ? x : Update.new(self, x)
+        @offset = u.update_id if u.update_id && @offset < u.update_id
+        @tasks = @commands.select { |pattern, *| u.match? pattern }
           .group_by { |e| e[2] ? :before : e[3] ? :after : nil }
-          .values_at(:before, nil, :after).flatten(1)
+          .values_at(:before, nil, :after).compact.flatten(1)
         while t = @tasks.shift
-          u.instance_exec(u, t, &t[4])
+          debug ">> #{t[1] || t[0]}"
+          u.instance_exec(u.match(t[0]), u, t, &t[4])
         end
       end
       res = get_updates offset: @offset + 1, limit: 7, timeout: 15
@@ -171,6 +190,7 @@ class Tgbot
     debug "/#{meth} #{payload}"
     result = @client.post("#@prefix/#{meth}", form: payload).to_s
     result = json_to_ostruct(result)
+    debug "=> #{result}"
     blk ? blk.call(result) : result
   end
 
@@ -184,10 +204,10 @@ class Tgbot
     args.each do |arg|
       if field = defaults.find { |k, _| k.any? { |l| check_match l, arg } }&.last
         defaults.delete_if { |_, v| v == field }
-        pp [field, defaults]
         payload[field] = arg
       end
       if Hash === arg
+        defaults.delete_if { |_, v| arg.keys.include?(v) || arg.keys.include?(v.to_sym) }
         payload = payload.merge arg
       end
     end
