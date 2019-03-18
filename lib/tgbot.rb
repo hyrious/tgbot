@@ -116,7 +116,8 @@ class Tgbot
       payload = payload.merge options
       case style
       when :at
-        if payload[:text] && from
+        if payload[:text] && message.from
+          from = message.from
           if payload[:parse_mode].match? /Markdown/i
             prefix = "[#{from.first_name}](tg://user?id=#{from.id}) "
           elsif payload[:parse_mode].match? /HTML/i
