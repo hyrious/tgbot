@@ -1,7 +1,7 @@
 # Tgbot
 
 [![Gem Version](https://badge.fury.io/rb/tgbot.svg)](https://badge.fury.io/rb/tgbot)
-![Bot API Version](https://img.shields.io/badge/Bot%20API-4.1-blue.svg?style=flat-square)
+![Bot API Version](https://img.shields.io/badge/Bot%20API-4.3-blue.svg?style=flat-square)
 ![](https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat-square)
 
 A tiny but easy-to-use wrapper of [Telegram Bot API](https://core.telegram.org/bots/api).
@@ -15,12 +15,12 @@ A tiny but easy-to-use wrapper of [Telegram Bot API](https://core.telegram.org/b
 ```ruby
 Tgbot.run TOKEN, proxy: 'http://127.0.0.1:1080' do
   on 'start' do
-    reply '#{name}, at your service.'
+    reply "#{name}, at your service."
   end
 end
 # or
 bot = Tgbot.new TOKEN, proxy: 'http://127.0.0.1:1080'
-bot.on('start'){ reply '#{name}, at your service.' }
+bot.on('start'){ reply "#{name}, at your service." }
 bot.run # will block current thread
 ```
 

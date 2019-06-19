@@ -3,6 +3,38 @@ name: Telegram Bot API
 children:
 - name: Recent changes
   children:
+  - name: May 31, 2019
+    children: []
+    desc:
+    - name: p
+      content: Bot API 4.3
+    - name: ul
+      content:
+      - Added support for Seamless Telegram Login on external websites (needs Telegram 5.7 or higher).
+      - 'Added the new object LoginUrl and the new field login_url to the InlineKeyboardButton object which allows to automatically authorize users before they go to a URL specified by the bot. Users will be asked to confirm authorization in their Telegram app (needs version 5.7 or higher) when they press the button:'
+    - name: p
+      content: 'Also in this update:'
+    - name: ul
+      content:
+      - Added the field reply_markup to the Message object, containing the inline keyboard attached to the message.
+      - If a message with an inline keyboard is forwarded, the forwarded message will now have an inline keyboard if the keyboard contained only url and login_url buttons or if the message was sent via a bot and the keyboard contained only url, login_url, switch_inline_query or switch_inline_query_current_chat buttons. In the latter case, switch_inline_query_current_chat buttons are replaced with switch_inline_query buttons.
+      - Bots now receive the edited_message Update even if only Message.reply_markup has changed.
+      - Bots that have the can_edit_messages right in a channel can now use the method editMessageReplyMarkup for messages written by other administrators forever without the 48 hours limit.
+      - 'Don''t forget that starting in July 2019, webhook requests from Bot API will be coming from the subnets 149.154.160.0/20 and 91.108.4.0/22. Most users won''t need to do anything to continue receiving webhooks. If you control inbound access with a firewall, you may need to update your configuration. You can always find the list of actual IP addresses of servers used to send webhooks there: https://core.telegram.org/bots/webhooks.'
+  - name: April 14, 2019
+    children: []
+    desc:
+    - name: p
+      content: Bot API 4.2
+    - name: ul
+      content:
+      - 'Added support for native polls: added the object Poll, the methods sendPoll and stopPoll and the field poll in the Message and Update objects.'
+      - The method deleteMessage can now be used to delete messages sent by a user to the bot in private chats within 48 hours.
+      - 'Added support for pinned messages in basic groups in addition to supergroups and channel chats: you can pass group''s chat_id to pinChatMessage and unpinChatMessage, and receive the pinned group message in Chat object.'
+      - Added the field is_member to the ChatMember object, which can be used to find whether a restricted user is a member of the chat.
+      - Added the field forward_sender_name to the Message object, containing name of the sender who has opted to hide their account.
+      - 'Starting in July 2019, webhook requests from Bot API will be coming from the subnets 149.154.160.0/20 and 91.108.4.0/22. Most users won''t need to do anything to continue receiving webhooks. If you control inbound access with a firewall, you may need to update your configuration. You can always find the list of actual IP addresses of servers used to send webhooks there: https://core.telegram.org/bots/webhooks.'
+      - Document thumbnails now should be inscribed in a 320x320 square instead of 90x90.
   - name: August 27, 2018
     children: []
     desc:
@@ -105,6 +137,9 @@ children:
     - Field: pre_checkout_query
       Type: PreCheckoutQuery
       Description: Optional. New incoming pre-checkout query. Contains full information about checkout
+    - Field: poll
+      Type: Poll
+      Description: Optional. New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot
   - name: getUpdates
     children: []
     desc:
@@ -263,7 +298,7 @@ children:
       Description: Optional. Chat invite link, for supergroups and channel chats. Each administrator in a chat generates their own invite links, so the bot must first generate the link using exportChatInviteLink. Returned only in getChat.
     - Field: pinned_message
       Type: Message
-      Description: Optional. Pinned message, for supergroups and channel chats. Returned only in getChat.
+      Description: Optional. Pinned message, for groups, supergroups and channels. Returned only in getChat.
     - Field: sticker_set_name
       Type: String
       Description: Optional. For supergroups, name of group sticker set. Returned only in getChat.
@@ -300,6 +335,9 @@ children:
     - Field: forward_signature
       Type: String
       Description: Optional. For messages forwarded from channels, signature of the post author if present
+    - Field: forward_sender_name
+      Type: String
+      Description: Optional. Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages
     - Field: forward_date
       Type: Integer
       Description: Optional. For forwarded messages, date the original message was sent in Unix time
@@ -363,6 +401,9 @@ children:
     - Field: venue
       Type: Venue
       Description: Optional. Message is a venue, information about the venue
+    - Field: poll
+      Type: Poll
+      Description: Optional. Message is a native poll, information about the poll
     - Field: new_chat_members
       Type: Array of User
       Description: Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
@@ -408,6 +449,9 @@ children:
     - Field: passport_data
       Type: PassportData
       Description: Optional. Telegram Passport data
+    - Field: reply_markup
+      Type: InlineKeyboardMarkup
+      Description: Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
   - name: MessageEntity
     children: []
     desc:
@@ -645,6 +689,36 @@ children:
     - Field: foursquare_type
       Type: String
       Description: Optional. Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+  - name: PollOption
+    children: []
+    desc:
+    - name: p
+      content: This object contains information about one answer option in a poll.
+    table:
+    - Field: text
+      Type: String
+      Description: Option text, 1-100 characters
+    - Field: voter_count
+      Type: Integer
+      Description: Number of users that voted for this option
+  - name: Poll
+    children: []
+    desc:
+    - name: p
+      content: This object contains information about a poll.
+    table:
+    - Field: id
+      Type: String
+      Description: Unique poll identifier
+    - Field: question
+      Type: String
+      Description: Poll question, 1-255 characters
+    - Field: options
+      Type: Array of PollOption
+      Description: List of poll options
+    - Field: is_closed
+      Type: Boolean
+      Description: True, if the poll is closed
   - name: UserProfilePhotos
     children: []
     desc:
@@ -744,6 +818,9 @@ children:
     - Field: url
       Type: String
       Description: Optional. HTTP or tg:// url to be opened when button is pressed
+    - Field: login_url
+      Type: LoginUrl
+      Description: Optional. An HTTP URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget.
     - Field: callback_data
       Type: String
       Description: Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
@@ -759,6 +836,28 @@ children:
     - Field: pay
       Type: Boolean
       Description: 'Optional. Specify True, to send a Pay button.NOTE: This type of button must always be the first button in the first row.'
+  - name: LoginUrl
+    children: []
+    desc:
+    - name: p
+      content: 'This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the Telegram Login Widget when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in:'
+    - name: p
+      content: Telegram apps support these buttons as of version 5.7.
+    - name: blockquote
+      content: 'Sample bot: @discussbot'
+    table:
+    - Field: url
+      Type: String
+      Description: 'An HTTP URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in Receiving authorization data.NOTE: You must always check the hash of the received data to verify the authentication and the integrity of the data as described in Checking authorization.'
+    - Field: forward_text
+      Type: String
+      Description: Optional. New text of the button in forwarded messages.
+    - Field: bot_username
+      Type: String
+      Description: Optional. Username of a bot, which will be used for user authorization. See Setting up a bot for more details. If not specified, the current bot's username will be assumed. The url's domain must be the same as the domain linked with the bot. See Linking your domain to the bot for more details.
+    - Field: request_write_access
+      Type: Boolean
+      Description: Optional. Pass True to request the permission for your bot to send messages to the user.
   - name: CallbackQuery
     children: []
     desc:
@@ -858,10 +957,13 @@ children:
       Description: Optional. Administrators only. True, if the administrator can restrict, ban or unban chat members
     - Field: can_pin_messages
       Type: Boolean
-      Description: Optional. Administrators only. True, if the administrator can pin messages, supergroups only
+      Description: Optional. Administrators only. True, if the administrator can pin messages, groups and supergroups only
     - Field: can_promote_members
       Type: Boolean
       Description: Optional. Administrators only. True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by the user)
+    - Field: is_member
+      Type: Boolean
+      Description: Optional. Restricted only. True, if the user is a member of the chat at the moment of the request
     - Field: can_send_messages
       Type: Boolean
       Description: Optional. Restricted only. True, if the user can send text messages, contacts, locations and venues
@@ -930,7 +1032,7 @@ children:
       Description: File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More info on Sending Files »
     - Field: thumb
       Type: InputFile or String
-      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
       Description: Optional. Caption of the video to be sent, 0-1024 characters
@@ -963,7 +1065,7 @@ children:
       Description: File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More info on Sending Files »
     - Field: thumb
       Type: InputFile or String
-      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
       Description: Optional. Caption of the animation to be sent, 0-1024 characters
@@ -993,7 +1095,7 @@ children:
       Description: File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More info on Sending Files »
     - Field: thumb
       Type: InputFile or String
-      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
       Description: Optional. Caption of the audio to be sent, 0-1024 characters
@@ -1023,7 +1125,7 @@ children:
       Description: File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More info on Sending Files »
     - Field: thumb
       Type: InputFile or String
-      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
       Description: Optional. Caption of the document to be sent, 0-1024 characters
@@ -1257,7 +1359,7 @@ children:
     - Parameter: thumb
       Type: InputFile or String
       Required: Optional
-      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -1287,7 +1389,7 @@ children:
     - Parameter: thumb
       Type: InputFile or String
       Required: Optional
-      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Parameter: caption
       Type: String
       Required: Optional
@@ -1337,7 +1439,7 @@ children:
     - Parameter: thumb
       Type: InputFile or String
       Required: Optional
-      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Parameter: caption
       Type: String
       Required: Optional
@@ -1391,7 +1493,7 @@ children:
     - Parameter: thumb
       Type: InputFile or String
       Required: Optional
-      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Parameter: caption
       Type: String
       Required: Optional
@@ -1475,7 +1577,7 @@ children:
     - Parameter: thumb
       Type: InputFile or String
       Required: Optional
-      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -1548,7 +1650,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to edit live location messages sent by the bot or via the bot (for inline bots). A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
+      content: Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -1557,7 +1659,7 @@ children:
     - Parameter: message_id
       Type: Integer
       Required: Optional
-      Description: Required if inline_message_id is not specified. Identifier of the sent message
+      Description: Required if inline_message_id is not specified. Identifier of the message to edit
     - Parameter: inline_message_id
       Type: String
       Required: Optional
@@ -1578,7 +1680,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to stop updating a live location message sent by the bot or via the bot (for inline bots) before live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.
+      content: Use this method to stop updating a live location message before live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -1587,7 +1689,7 @@ children:
     - Parameter: message_id
       Type: Integer
       Required: Optional
-      Description: Required if inline_message_id is not specified. Identifier of the sent message
+      Description: Required if inline_message_id is not specified. Identifier of the message with live location to stop
     - Parameter: inline_message_id
       Type: String
       Required: Optional
@@ -1680,6 +1782,36 @@ children:
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
       Description: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove keyboard or to force a reply from the user.
+  - name: sendPoll
+    children: []
+    desc:
+    - name: p
+      content: Use this method to send a native poll. A native poll can't be sent to a private chat. On success, the sent Message is returned.
+    table:
+    - Parameter: chat_id
+      Type: Integer or String
+      Required: 'Yes'
+      Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername). A native poll can't be sent to a private chat.
+    - Parameter: question
+      Type: String
+      Required: 'Yes'
+      Description: Poll question, 1-255 characters
+    - Parameter: options
+      Type: Array of String
+      Required: 'Yes'
+      Description: List of answer options, 2-10 strings 1-100 characters each
+    - Parameter: disable_notification
+      Type: Boolean
+      Required: Optional
+      Description: Sends the message silently. Users will receive a notification with no sound.
+    - Parameter: reply_to_message_id
+      Type: Integer
+      Required: Optional
+      Description: If the message is a reply, ID of the original message
+    - Parameter: reply_markup
+      Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
+      Required: Optional
+      Description: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
   - name: sendChatAction
     children: []
     desc:
@@ -1916,7 +2048,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to pin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
+      content: Use this method to pin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -1934,7 +2066,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to unpin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
+      content: Use this method to unpin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2060,7 +2192,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+      content: Use this method to edit text and game messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2069,7 +2201,7 @@ children:
     - Parameter: message_id
       Type: Integer
       Required: Optional
-      Description: Required if inline_message_id is not specified. Identifier of the sent message
+      Description: Required if inline_message_id is not specified. Identifier of the message to edit
     - Parameter: inline_message_id
       Type: String
       Required: Optional
@@ -2094,7 +2226,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to edit captions of messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+      content: Use this method to edit captions of messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2103,7 +2235,7 @@ children:
     - Parameter: message_id
       Type: Integer
       Required: Optional
-      Description: Required if inline_message_id is not specified. Identifier of the sent message
+      Description: Required if inline_message_id is not specified. Identifier of the message to edit
     - Parameter: inline_message_id
       Type: String
       Required: Optional
@@ -2133,7 +2265,7 @@ children:
     - Parameter: message_id
       Type: Integer
       Required: Optional
-      Description: Required if inline_message_id is not specified. Identifier of the sent message
+      Description: Required if inline_message_id is not specified. Identifier of the message to edit
     - Parameter: inline_message_id
       Type: String
       Required: Optional
@@ -2150,7 +2282,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots).  On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+      content: Use this method to edit only the reply markup of messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2159,7 +2291,7 @@ children:
     - Parameter: message_id
       Type: Integer
       Required: Optional
-      Description: Required if inline_message_id is not specified. Identifier of the sent message
+      Description: Required if inline_message_id is not specified. Identifier of the message to edit
     - Parameter: inline_message_id
       Type: String
       Required: Optional
@@ -2168,11 +2300,29 @@ children:
       Type: InlineKeyboardMarkup
       Required: Optional
       Description: A JSON-serialized object for an inline keyboard.
+  - name: stopPoll
+    children: []
+    desc:
+    - name: p
+      content: Use this method to stop a poll which was sent by the bot. On success, the stopped Poll with the final results is returned.
+    table:
+    - Parameter: chat_id
+      Type: Integer or String
+      Required: 'Yes'
+      Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    - Parameter: message_id
+      Type: Integer
+      Required: 'Yes'
+      Description: Identifier of the original message with the poll
+    - Parameter: reply_markup
+      Type: InlineKeyboardMarkup
+      Required: Optional
+      Description: A JSON-serialized object for a new message inline keyboard.
   - name: deleteMessage
     children: []
     desc:
     - name: p
-      content: Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.
+      content: Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots can delete incoming messages in private chats.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.
     table:
     - Parameter: chat_id
       Type: Integer or String
