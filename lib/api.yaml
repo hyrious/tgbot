@@ -3,6 +3,23 @@ name: Telegram Bot API
 children:
 - name: Recent changes
   children:
+  - name: July 29, 2019
+    children: []
+    desc:
+    - name: p
+      content: Bot API 4.4
+    - name: ul
+      content:
+      - Added support for animated stickers. New field is_animated in Sticker and StickerSet objects, animated stickers can now be used in sendSticker and InlineQueryResultCachedSticker.
+      - Added support for default permissions in groups. New object ChatPermissions, containing actions which a member can take in a chat. New field permissions in the Chat object; new method setChatPermissions.
+      - The field all_members_are_administrators has been removed from the documentation for the Chat object. The field is still returned in the object for backward compatibility, but new bots should use the permissions field instead.
+      - 'Added support for more permissions for group and supergroup members: added the new field can_send_polls to ChatMember object, added can_change_info, can_invite_users, can_pin_messages in ChatMember object for restricted users (previously available only for administrators).'
+      - The method restrictChatMember now takes the new user permissions in a single argument of the type ChatPermissions. The old way of passing parameters will keep working for a while for backward compatibility.
+      - Added description support for basic groups (previously available in supergroups and channel chats). You can pass a group's chat_id to setChatDescription and receive the group's description in the Chat object in the response to getChat method.
+      - Added invite_link support for basic groups (previously available in supergroups and channel chats). You can pass a group's chat_id to exportChatInviteLink and receive the group's invite link in the Chat object in the response to getChat method.
+      - File identifiers from the ChatPhoto object are now invalidated and can no longer be used whenever the photo is changed.
+      - 'All webhook requests from the Bot API are now coming from the subnets 149.154.160.0/20 and 91.108.4.0/22. Most users won''t need to do anything to continue receiving webhooks. If you control inbound access with a firewall, you may need to update your configuration. You can always find the list of actual IP addresses of servers used to send webhooks there: https://core.telegram.org/bots/webhooks.'
+      - As of the next Bot API update (version 4.5), nested MessageEntity objects will be allowed in message texts and captions. Please make sure that your code can correctly handle such entities.
   - name: May 31, 2019
     children: []
     desc:
@@ -35,35 +52,6 @@ children:
       - Added the field forward_sender_name to the Message object, containing name of the sender who has opted to hide their account.
       - 'Starting in July 2019, webhook requests from Bot API will be coming from the subnets 149.154.160.0/20 and 91.108.4.0/22. Most users won''t need to do anything to continue receiving webhooks. If you control inbound access with a firewall, you may need to update your configuration. You can always find the list of actual IP addresses of servers used to send webhooks there: https://core.telegram.org/bots/webhooks.'
       - Document thumbnails now should be inscribed in a 320x320 square instead of 90x90.
-  - name: August 27, 2018
-    children: []
-    desc:
-    - name: p
-      content: Bot API 4.1
-    - name: ul
-      content:
-      - Added support for translated versions of documents in Telegram Passport. New field translation in EncryptedPassportElement.
-      - 'New errors: PassportElementErrorTranslationFile and PassportElementErrorTranslationFiles, PassportElementErrorUnspecified.'
-  - name: July 26, 2018
-    children: []
-    desc:
-    - name: p
-      content: Bot API 4.0.
-    - name: ul
-      content:
-      - Added support for Telegram Passport. See the official announcement on the blog and the manual for details.
-      - 'Added support for editing the media content of messages: added the method editMessageMedia and new types InputMediaAnimation, InputMediaAudio, and InputMediaDocument.'
-      - Added the field thumb to the Audio object to contain the thumbnail of the album cover to which the music file belongs.
-      - Added support for attaching custom thumbnails to uploaded files. For animations, audios, videos and video notes, which are less than 10 MB in size, thumbnails are generated automatically.
-      - tg:// URLs now can be used in inline keyboard url buttons and text_link message entities.
-      - Added the method sendAnimation, which can be used instead of sendDocument to send animations, specifying their duration, width and height.
-      - Added the field animation to the Message object. For backward compatibility, when this field is set, the document field will be also set.
-      - 'Added two new MessageEntity types: cashtag and phone_number.'
-      - 'Added support for Foursquare venues: added the new field foursquare_type to the objects Venue, InlineQueryResultVenue and InputVenueMessageContent, and the parameter foursquare_type to the sendVenue method.'
-      - You can now create inline mentions of users, who have pressed your bot's callback buttons.
-      - You can now use the Retry-After response header to configure the delay after which the Bot API will retry the request after an unsuccessful response from a webhook.
-      - If a webhook returns the HTTP error 410 Gone for all requests for more than 23 hours successively, it can be automatically removed.
-      - 'Added vCard support when sharing contacts: added the field vcard to the objects Contact, InlineQueryResultContact, InputContactMessageContent and the method sendContact.'
     - name: p
       content: See earlier changes »
 - name: Authorizing your bot
@@ -284,21 +272,21 @@ children:
     - Field: last_name
       Type: String
       Description: Optional. Last name of the other party in a private chat
-    - Field: all_members_are_administrators
-      Type: Boolean
-      Description: Optional. True if a group has ‘All Members Are Admins’ enabled.
     - Field: photo
       Type: ChatPhoto
       Description: Optional. Chat photo. Returned only in getChat.
     - Field: description
       Type: String
-      Description: Optional. Description, for supergroups and channel chats. Returned only in getChat.
+      Description: Optional. Description, for groups, supergroups and channel chats. Returned only in getChat.
     - Field: invite_link
       Type: String
-      Description: Optional. Chat invite link, for supergroups and channel chats. Each administrator in a chat generates their own invite links, so the bot must first generate the link using exportChatInviteLink. Returned only in getChat.
+      Description: Optional. Chat invite link, for groups, supergroups and channel chats. Each administrator in a chat generates their own invite links, so the bot must first generate the link using exportChatInviteLink. Returned only in getChat.
     - Field: pinned_message
       Type: Message
       Description: Optional. Pinned message, for groups, supergroups and channels. Returned only in getChat.
+    - Field: permissions
+      Type: ChatPermissions
+      Description: Optional. Default chat member permissions, for groups and supergroups. Returned only in getChat.
     - Field: sticker_set_name
       Type: String
       Description: Optional. For supergroups, name of group sticker set. Returned only in getChat.
@@ -481,7 +469,7 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Unique identifier for this file
+      Description: Identifier for this file
     - Field: width
       Type: Integer
       Description: Photo width
@@ -499,7 +487,7 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Unique identifier for this file
+      Description: Identifier for this file
     - Field: duration
       Type: Integer
       Description: Duration of the audio in seconds as defined by sender
@@ -526,7 +514,7 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Unique file identifier
+      Description: Identifier for this file
     - Field: thumb
       Type: PhotoSize
       Description: Optional. Document thumbnail as defined by sender
@@ -547,7 +535,7 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Unique identifier for this file
+      Description: Identifier for this file
     - Field: width
       Type: Integer
       Description: Video width as defined by sender
@@ -574,7 +562,7 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Unique file identifier
+      Description: Identifier for this file
     - Field: width
       Type: Integer
       Description: Video width as defined by sender
@@ -604,7 +592,7 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Unique identifier for this file
+      Description: Identifier for this file
     - Field: duration
       Type: Integer
       Description: Duration of the audio in seconds as defined by sender
@@ -622,7 +610,7 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Unique identifier for this file
+      Description: Identifier for this file
     - Field: length
       Type: Integer
       Description: Video width and height (diameter of the video message) as defined by sender
@@ -741,7 +729,7 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Unique identifier for this file
+      Description: Identifier for this file
     - Field: file_size
       Type: Integer
       Description: Optional. File size, if known
@@ -893,13 +881,13 @@ children:
     - name: p
       content: Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
     - name: blockquote
-      content: 'Example: A poll bot for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:'
-    - name: ul
-      content:
-      - Explain the user how to send a command with parameters (e.g. /newpoll question answer1 answer2). May be appealing for hardcore users but lacks modern day polish.
-      - Guide the user through a step-by-step process. ‘Please send me your question’, ‘Cool, now let’s add the first answer option‘, ’Great. Keep adding answer options, then send /done when you‘re ready’.
-    - name: p
-      content: The last option is definitely more attractive. And if you use ForceReply in your bot‘s questions, it will receive the user’s answers even if it only receives replies, commands and mentions — without any extra work for the user.
+      content: |-
+        Example: A poll bot for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:
+
+        Explain the user how to send a command with parameters (e.g. /newpoll question answer1 answer2). May be appealing for hardcore users but lacks modern day polish.
+        Guide the user through a step-by-step process. ‘Please send me your question’, ‘Cool, now let’s add the first answer option‘, ’Great. Keep adding answer options, then send /done when you‘re ready’.
+
+        The last option is definitely more attractive. And if you use ForceReply in your bot‘s questions, it will receive the user’s answers even if it only receives replies, commands and mentions — without any extra work for the user.
     table:
     - Field: force_reply
       Type: 'True'
@@ -915,10 +903,10 @@ children:
     table:
     - Field: small_file_id
       Type: String
-      Description: Unique file identifier of small (160x160) chat photo. This file_id can be used only for photo download.
+      Description: File identifier of small (160x160) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.
     - Field: big_file_id
       Type: String
-      Description: Unique file identifier of big (640x640) chat photo. This file_id can be used only for photo download.
+      Description: File identifier of big (640x640) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.
   - name: ChatMember
     children: []
     desc:
@@ -933,49 +921,82 @@ children:
       Description: The member's status in the chat. Can be “creator”, “administrator”, “member”, “restricted”, “left” or “kicked”
     - Field: until_date
       Type: Integer
-      Description: Optional. Restricted and kicked only. Date when restrictions will be lifted for this user, unix time
+      Description: Optional. Restricted and kicked only. Date when restrictions will be lifted for this user; unix time
     - Field: can_be_edited
       Type: Boolean
       Description: Optional. Administrators only. True, if the bot is allowed to edit administrator privileges of that user
-    - Field: can_change_info
-      Type: Boolean
-      Description: Optional. Administrators only. True, if the administrator can change the chat title, photo and other settings
     - Field: can_post_messages
       Type: Boolean
-      Description: Optional. Administrators only. True, if the administrator can post in the channel, channels only
+      Description: Optional. Administrators only. True, if the administrator can post in the channel; channels only
     - Field: can_edit_messages
       Type: Boolean
-      Description: Optional. Administrators only. True, if the administrator can edit messages of other users and can pin messages, channels only
+      Description: Optional. Administrators only. True, if the administrator can edit messages of other users and can pin messages; channels only
     - Field: can_delete_messages
       Type: Boolean
       Description: Optional. Administrators only. True, if the administrator can delete messages of other users
-    - Field: can_invite_users
-      Type: Boolean
-      Description: Optional. Administrators only. True, if the administrator can invite new users to the chat
     - Field: can_restrict_members
       Type: Boolean
       Description: Optional. Administrators only. True, if the administrator can restrict, ban or unban chat members
-    - Field: can_pin_messages
-      Type: Boolean
-      Description: Optional. Administrators only. True, if the administrator can pin messages, groups and supergroups only
     - Field: can_promote_members
       Type: Boolean
       Description: Optional. Administrators only. True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by the user)
+    - Field: can_change_info
+      Type: Boolean
+      Description: Optional. Administrators and restricted only. True, if the user is allowed to change the chat title, photo and other settings
+    - Field: can_invite_users
+      Type: Boolean
+      Description: Optional. Administrators and restricted only. True, if the user is allowed to invite new users to the chat
+    - Field: can_pin_messages
+      Type: Boolean
+      Description: Optional. Administrators and restricted only. True, if the user is allowed to pin messages; groups and supergroups only
     - Field: is_member
       Type: Boolean
       Description: Optional. Restricted only. True, if the user is a member of the chat at the moment of the request
     - Field: can_send_messages
       Type: Boolean
-      Description: Optional. Restricted only. True, if the user can send text messages, contacts, locations and venues
+      Description: Optional. Restricted only. True, if the user is allowed to send text messages, contacts, locations and venues
     - Field: can_send_media_messages
       Type: Boolean
-      Description: Optional. Restricted only. True, if the user can send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages
+      Description: Optional. Restricted only. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes
+    - Field: can_send_polls
+      Type: Boolean
+      Description: Optional. Restricted only. True, if the user is allowed to send polls
     - Field: can_send_other_messages
       Type: Boolean
-      Description: Optional. Restricted only. True, if the user can send animations, games, stickers and use inline bots, implies can_send_media_messages
+      Description: Optional. Restricted only. True, if the user is allowed to send animations, games, stickers and use inline bots
     - Field: can_add_web_page_previews
       Type: Boolean
-      Description: Optional. Restricted only. True, if user may add web page previews to his messages, implies can_send_media_messages
+      Description: Optional. Restricted only. True, if the user is allowed to add web page previews to their messages
+  - name: ChatPermissions
+    children: []
+    desc:
+    - name: p
+      content: Describes actions that a non-administrator user is allowed to take in a chat.
+    table:
+    - Field: can_send_messages
+      Type: Boolean
+      Description: Optional. True, if the user is allowed to send text messages, contacts, locations and venues
+    - Field: can_send_media_messages
+      Type: Boolean
+      Description: Optional. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages
+    - Field: can_send_polls
+      Type: Boolean
+      Description: Optional. True, if the user is allowed to send polls, implies can_send_messages
+    - Field: can_send_other_messages
+      Type: Boolean
+      Description: Optional. True, if the user is allowed to send animations, games, stickers and use inline bots, implies can_send_media_messages
+    - Field: can_add_web_page_previews
+      Type: Boolean
+      Description: Optional. True, if the user is allowed to add web page previews to their messages, implies can_send_media_messages
+    - Field: can_change_info
+      Type: Boolean
+      Description: Optional. True, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups
+    - Field: can_invite_users
+      Type: Boolean
+      Description: Optional. True, if the user is allowed to invite new users to the chat
+    - Field: can_pin_messages
+      Type: Boolean
+      Description: Optional. True, if the user is allowed to pin messages. Ignored in public supergroups
   - name: ResponseParameters
     children: []
     desc:
@@ -1155,6 +1176,7 @@ children:
       - It is not possible to resend thumbnails.
       - Resending a photo by file_id will send all of its sizes.
       - file_id is unique for each individual bot and can't be transferred from one bot to another.
+      - file_id uniquely identifies a file, but a file can have different valid file_ids even for the same bot.
     - name: p
       content: Sending by URL
     - name: ul
@@ -1324,7 +1346,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+      content: Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
     - name: p
       content: For sending voice messages, use the sendVoice method instead.
     table:
@@ -1865,8 +1887,6 @@ children:
     desc:
     - name: p
       content: Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
-    - name: blockquote
-      content: 'Note: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group. Otherwise members may only be removed by the group''s creator or by the member that added them.'
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -1898,7 +1918,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all boolean parameters to lift restrictions from a user. Returns True on success.
+      content: Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -1908,26 +1928,14 @@ children:
       Type: Integer
       Required: 'Yes'
       Description: Unique identifier of the target user
+    - Parameter: permissions
+      Type: ChatPermissions
+      Required: 'Yes'
+      Description: New user permissions
     - Parameter: until_date
       Type: Integer
       Required: Optional
       Description: Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever
-    - Parameter: can_send_messages
-      Type: Boolean
-      Required: Optional
-      Description: Pass True, if the user can send text messages, contacts, locations and venues
-    - Parameter: can_send_media_messages
-      Type: Boolean
-      Required: Optional
-      Description: Pass True, if the user can send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages
-    - Parameter: can_send_other_messages
-      Type: Boolean
-      Required: Optional
-      Description: Pass True, if the user can send animations, games, stickers and use inline bots, implies can_send_media_messages
-    - Parameter: can_add_web_page_previews
-      Type: Boolean
-      Required: Optional
-      Description: Pass True, if the user may add web page previews to their messages, implies can_send_media_messages
   - name: promoteChatMember
     children: []
     desc:
@@ -1974,6 +1982,20 @@ children:
       Type: Boolean
       Required: Optional
       Description: Pass True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)
+  - name: setChatPermissions
+    children: []
+    desc:
+    - name: p
+      content: Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members admin rights. Returns True on success.
+    table:
+    - Parameter: chat_id
+      Type: Integer or String
+      Required: 'Yes'
+      Description: Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+    - Parameter: permissions
+      Type: ChatPermissions
+      Required: 'Yes'
+      Description: New default chat permissions
   - name: exportChatInviteLink
     children: []
     desc:
@@ -1991,8 +2013,6 @@ children:
     desc:
     - name: p
       content: Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
-    - name: blockquote
-      content: 'Note: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group.'
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2007,8 +2027,6 @@ children:
     desc:
     - name: p
       content: Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
-    - name: blockquote
-      content: 'Note: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group.'
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2019,8 +2037,6 @@ children:
     desc:
     - name: p
       content: Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
-    - name: blockquote
-      content: 'Note: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group.'
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2034,7 +2050,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to change the description of a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+      content: Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2347,13 +2363,16 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Unique identifier for this file
+      Description: Identifier for this file
     - Field: width
       Type: Integer
       Description: Sticker width
     - Field: height
       Type: Integer
       Description: Sticker height
+    - Field: is_animated
+      Type: Boolean
+      Description: True, if the sticker is animated
     - Field: thumb
       Type: PhotoSize
       Description: Optional. Sticker thumbnail in the .webp or .jpg format
@@ -2381,6 +2400,9 @@ children:
     - Field: title
       Type: String
       Description: Sticker set title
+    - Field: is_animated
+      Type: Boolean
+      Description: True, if the sticker set contains animated stickers
     - Field: contains_masks
       Type: Boolean
       Description: True, if the sticker set contains masks
@@ -2409,7 +2431,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to send .webp stickers. On success, the sent Message is returned.
+      content: Use this method to send static .WEBP or animated .TGS stickers. On success, the sent Message is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2845,7 +2867,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Represents a link to an mp3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.
+      content: Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.
     - name: p
       content: 'Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.'
     table:
@@ -3209,7 +3231,7 @@ children:
     - name: p
       content: Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the sticker.
     - name: p
-      content: 'Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.'
+      content: 'Note: This will only work in Telegram versions released after 9 April, 2016 for static stickers and after 06 July, 2019 for animated stickers. Older clients will ignore them.'
     table:
     - Field: type
       Type: String
@@ -3330,7 +3352,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Represents a link to an mp3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.
+      content: Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.
     - name: p
       content: 'Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.'
     table:
@@ -3793,7 +3815,7 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Unique identifier for this file
+      Description: Identifier for this file
     - Field: file_size
       Type: Integer
       Description: File size
