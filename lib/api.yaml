@@ -3,57 +3,56 @@ name: Telegram Bot API
 children:
 - name: Recent changes
   children:
-  - name: July 29, 2019
+  - name: March 30, 2020
     children: []
     desc:
     - name: p
-      content: Bot API 4.4
+      content: Bot API 4.7
     - name: ul
       content:
-      - Added support for animated stickers. New field is_animated in Sticker and StickerSet objects, animated stickers can now be used in sendSticker and InlineQueryResultCachedSticker.
-      - Added support for default permissions in groups. New object ChatPermissions, containing actions which a member can take in a chat. New field permissions in the Chat object; new method setChatPermissions.
-      - The field all_members_are_administrators has been removed from the documentation for the Chat object. The field is still returned in the object for backward compatibility, but new bots should use the permissions field instead.
-      - 'Added support for more permissions for group and supergroup members: added the new field can_send_polls to ChatMember object, added can_change_info, can_invite_users, can_pin_messages in ChatMember object for restricted users (previously available only for administrators).'
-      - The method restrictChatMember now takes the new user permissions in a single argument of the type ChatPermissions. The old way of passing parameters will keep working for a while for backward compatibility.
-      - Added description support for basic groups (previously available in supergroups and channel chats). You can pass a group's chat_id to setChatDescription and receive the group's description in the Chat object in the response to getChat method.
-      - Added invite_link support for basic groups (previously available in supergroups and channel chats). You can pass a group's chat_id to exportChatInviteLink and receive the group's invite link in the Chat object in the response to getChat method.
-      - File identifiers from the ChatPhoto object are now invalidated and can no longer be used whenever the photo is changed.
-      - 'All webhook requests from the Bot API are now coming from the subnets 149.154.160.0/20 and 91.108.4.0/22. Most users won''t need to do anything to continue receiving webhooks. If you control inbound access with a firewall, you may need to update your configuration. You can always find the list of actual IP addresses of servers used to send webhooks there: https://core.telegram.org/bots/webhooks.'
-      - As of the next Bot API update (version 4.5), nested MessageEntity objects will be allowed in message texts and captions. Please make sure that your code can correctly handle such entities.
-  - name: May 31, 2019
+      - Added the method sendDice for sending a dice message, which will have a random value from 1 to 6. (Yes, we're aware of the “proper” singular of die. But it's awkward, and we decided to help it change. One dice at a time!)
+      - Added the field dice to the Message object.
+      - Added the method getMyCommands for getting the current list of the bot's commands.
+      - Added the method setMyCommands for changing the list of the bot's commands through the Bot API instead of @BotFather.
+      - Added the ability to create animated sticker sets by specifying the parameter tgs_sticker instead of png_sticker in the method createNewStickerSet.
+      - Added the ability to add animated stickers to sets created by the bot by specifying the parameter tgs_sticker instead of png_sticker in the method addStickerToSet.
+      - Added the field thumb to the StickerSet object.
+      - Added the ability to change thumbnails of sticker sets created by the bot using the method setStickerSetThumb.
+  - name: January 23, 2020
     children: []
     desc:
     - name: p
-      content: Bot API 4.3
+      content: Bot API 4.6
     - name: ul
       content:
-      - Added support for Seamless Telegram Login on external websites (needs Telegram 5.7 or higher).
-      - 'Added the new object LoginUrl and the new field login_url to the InlineKeyboardButton object which allows to automatically authorize users before they go to a URL specified by the bot. Users will be asked to confirm authorization in their Telegram app (needs version 5.7 or higher) when they press the button:'
-    - name: p
-      content: 'Also in this update:'
-    - name: ul
-      content:
-      - Added the field reply_markup to the Message object, containing the inline keyboard attached to the message.
-      - If a message with an inline keyboard is forwarded, the forwarded message will now have an inline keyboard if the keyboard contained only url and login_url buttons or if the message was sent via a bot and the keyboard contained only url, login_url, switch_inline_query or switch_inline_query_current_chat buttons. In the latter case, switch_inline_query_current_chat buttons are replaced with switch_inline_query buttons.
-      - Bots now receive the edited_message Update even if only Message.reply_markup has changed.
-      - Bots that have the can_edit_messages right in a channel can now use the method editMessageReplyMarkup for messages written by other administrators forever without the 48 hours limit.
-      - 'Don''t forget that starting in July 2019, webhook requests from Bot API will be coming from the subnets 149.154.160.0/20 and 91.108.4.0/22. Most users won''t need to do anything to continue receiving webhooks. If you control inbound access with a firewall, you may need to update your configuration. You can always find the list of actual IP addresses of servers used to send webhooks there: https://core.telegram.org/bots/webhooks.'
-  - name: April 14, 2019
+      - Supported Polls 2.0.
+      - 'Added the ability to send non-anonymous, multiple answer, and quiz-style polls: added the parameters is_anonymous, type, allows_multiple_answers, correct_option_id, is_closed options to the method sendPoll.'
+      - Added the object KeyboardButtonPollType and the field request_poll to the object KeyboardButton.
+      - Added updates about changes of user answers in non-anonymous polls, represented by the object PollAnswer and the field poll_answer in the Update object.
+      - Added the fields total_voter_count, is_anonymous, type, allows_multiple_answers, correct_option_id to the Poll object.
+      - Bots can now send polls to private chats.
+      - 'Added more information about the bot in response to the getMe request: added the fields can_join_groups, can_read_all_group_messages and supports_inline_queries to the User object.'
+      - Added the optional field language to the MessageEntity object.
+  - name: December 31, 2019
     children: []
     desc:
     - name: p
-      content: Bot API 4.2
+      content: Bot API 4.5
     - name: ul
       content:
-      - 'Added support for native polls: added the object Poll, the methods sendPoll and stopPoll and the field poll in the Message and Update objects.'
-      - The method deleteMessage can now be used to delete messages sent by a user to the bot in private chats within 48 hours.
-      - 'Added support for pinned messages in basic groups in addition to supergroups and channel chats: you can pass group''s chat_id to pinChatMessage and unpinChatMessage, and receive the pinned group message in Chat object.'
-      - Added the field is_member to the ChatMember object, which can be used to find whether a restricted user is a member of the chat.
-      - Added the field forward_sender_name to the Message object, containing name of the sender who has opted to hide their account.
-      - 'Starting in July 2019, webhook requests from Bot API will be coming from the subnets 149.154.160.0/20 and 91.108.4.0/22. Most users won''t need to do anything to continue receiving webhooks. If you control inbound access with a firewall, you may need to update your configuration. You can always find the list of actual IP addresses of servers used to send webhooks there: https://core.telegram.org/bots/webhooks.'
-      - Document thumbnails now should be inscribed in a 320x320 square instead of 90x90.
+      - Added support for two new MessageEntity types, underline and strikethrough.
+      - Added support for nested MessageEntity objects. Entities can now contain other entities. If two entities have common characters then one of them is fully contained inside the other.
+      - Added support for nested entities and the new tags <u>/<ins> (for underlined text) and <s>/<strike>/<del> (for strikethrough text) in parse mode HTML.
+      - Added a new parse mode, MarkdownV2, which supports nested entities and two new entities __ (for underlined text) and ~ (for strikethrough text). Parse mode Markdown remains unchanged for backward compatibility.
+      - Added the field file_unique_id to the objects Animation, Audio, Document, PassportFile, PhotoSize, Sticker, Video, VideoNote, Voice, File and the fields small_file_unique_id and big_file_unique_id to the object ChatPhoto. The new fields contain a unique file identifier, which is supposed to be the same over time and for different bots, but can't be used to download or reuse the file.
+      - Added the field custom_title to the ChatMember object.
+      - Added the new method setChatAdministratorCustomTitle to manage the custom titles of administrators promoted by the bot.
+      - Added the field slow_mode_delay to the Chat object.
     - name: p
       content: See earlier changes »
+  desc:
+  - name: blockquote
+    content: Subscribe to @BotNews to be the first to know about the latest updates and join the discussion in @BotTalk
 - name: Authorizing your bot
   children: []
   desc:
@@ -128,6 +127,9 @@ children:
     - Field: poll
       Type: Poll
       Description: Optional. New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot
+    - Field: poll_answer
+      Type: PollAnswer
+      Description: Optional. A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.
   - name: getUpdates
     children: []
     desc:
@@ -151,7 +153,7 @@ children:
     - Parameter: allowed_updates
       Type: Array of String
       Required: Optional
-      Description: List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.
+      Description: A JSON-serialized list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.
   - name: setWebhook
     children: []
     desc:
@@ -179,7 +181,7 @@ children:
     - Parameter: allowed_updates
       Type: Array of String
       Required: Optional
-      Description: List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
+      Description: A JSON-serialized list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
   - name: deleteWebhook
     children: []
     desc:
@@ -248,6 +250,15 @@ children:
     - Field: language_code
       Type: String
       Description: Optional. IETF language tag of the user's language
+    - Field: can_join_groups
+      Type: Boolean
+      Description: Optional. True, if the bot can be invited to groups. Returned only in getMe.
+    - Field: can_read_all_group_messages
+      Type: Boolean
+      Description: Optional. True, if privacy mode is disabled for the bot. Returned only in getMe.
+    - Field: supports_inline_queries
+      Type: Boolean
+      Description: Optional. True, if the bot supports inline queries. Returned only in getMe.
   - name: Chat
     children: []
     desc:
@@ -287,6 +298,9 @@ children:
     - Field: permissions
       Type: ChatPermissions
       Description: Optional. Default chat member permissions, for groups and supergroups. Returned only in getChat.
+    - Field: slow_mode_delay
+      Type: Integer
+      Description: Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user. Returned only in getChat.
     - Field: sticker_set_name
       Type: String
       Description: Optional. For supergroups, name of group sticker set. Returned only in getChat.
@@ -343,7 +357,7 @@ children:
       Description: Optional. Signature of the post author for messages in channels
     - Field: text
       Type: String
-      Description: Optional. For text messages, the actual UTF-8 text of the message, 0-4096 characters.
+      Description: Optional. For text messages, the actual UTF-8 text of the message, 0-4096 characters
     - Field: entities
       Type: Array of MessageEntity
       Description: Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
@@ -392,6 +406,9 @@ children:
     - Field: poll
       Type: Poll
       Description: Optional. Message is a native poll, information about the poll
+    - Field: dice
+      Type: Dice
+      Description: Optional. Message is a dice with random value from 1 to 6
     - Field: new_chat_members
       Type: Array of User
       Description: Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
@@ -448,7 +465,7 @@ children:
     table:
     - Field: type
       Type: String
-      Description: Type of the entity. Can be mention (@username), hashtag, cashtag, bot_command, url, email, phone_number, bold (bold text), italic (italic text), code (monowidth string), pre (monowidth block), text_link (for clickable text URLs), text_mention (for users without usernames)
+      Description: Type of the entity. Can be “mention” (@username), “hashtag” (#hashtag), “cashtag” ($USD), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames)
     - Field: offset
       Type: Integer
       Description: Offset in UTF-16 code units to the start of the entity
@@ -461,6 +478,9 @@ children:
     - Field: user
       Type: User
       Description: Optional. For “text_mention” only, the mentioned user
+    - Field: language
+      Type: String
+      Description: Optional. For “pre” only, the programming language of the entity text
   - name: PhotoSize
     children: []
     desc:
@@ -469,7 +489,10 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Identifier for this file
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     - Field: width
       Type: Integer
       Description: Photo width
@@ -487,7 +510,10 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Identifier for this file
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     - Field: duration
       Type: Integer
       Description: Duration of the audio in seconds as defined by sender
@@ -514,7 +540,10 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Identifier for this file
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     - Field: thumb
       Type: PhotoSize
       Description: Optional. Document thumbnail as defined by sender
@@ -535,7 +564,10 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Identifier for this file
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     - Field: width
       Type: Integer
       Description: Video width as defined by sender
@@ -562,7 +594,10 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Identifier for this file
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     - Field: width
       Type: Integer
       Description: Video width as defined by sender
@@ -592,7 +627,10 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Identifier for this file
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     - Field: duration
       Type: Integer
       Description: Duration of the audio in seconds as defined by sender
@@ -610,7 +648,10 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Identifier for this file
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     - Field: length
       Type: Integer
       Description: Video width and height (diameter of the video message) as defined by sender
@@ -689,6 +730,21 @@ children:
     - Field: voter_count
       Type: Integer
       Description: Number of users that voted for this option
+  - name: PollAnswer
+    children: []
+    desc:
+    - name: p
+      content: This object represents an answer of a user in a non-anonymous poll.
+    table:
+    - Field: poll_id
+      Type: String
+      Description: Unique poll identifier
+    - Field: user
+      Type: User
+      Description: The user, who changed the answer to the poll
+    - Field: option_ids
+      Type: Array of Integer
+      Description: 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote.
   - name: Poll
     children: []
     desc:
@@ -704,9 +760,33 @@ children:
     - Field: options
       Type: Array of PollOption
       Description: List of poll options
+    - Field: total_voter_count
+      Type: Integer
+      Description: Total number of users that voted in the poll
     - Field: is_closed
       Type: Boolean
       Description: True, if the poll is closed
+    - Field: is_anonymous
+      Type: Boolean
+      Description: True, if the poll is anonymous
+    - Field: type
+      Type: String
+      Description: Poll type, currently can be “regular” or “quiz”
+    - Field: allows_multiple_answers
+      Type: Boolean
+      Description: True, if the poll allows multiple answers
+    - Field: correct_option_id
+      Type: Integer
+      Description: Optional. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.
+  - name: Dice
+    children: []
+    desc:
+    - name: p
+      content: This object represents a dice with random value from 1 to 6. (Yes, we're aware of the “proper” singular of die. But it's awkward, and we decided to help it change. One dice at a time!)
+    table:
+    - Field: value
+      Type: Integer
+      Description: Value of the dice, 1-6
   - name: UserProfilePhotos
     children: []
     desc:
@@ -729,7 +809,10 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Identifier for this file
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     - Field: file_size
       Type: Integer
       Description: Optional. File size, if known
@@ -758,9 +841,9 @@ children:
     children: []
     desc:
     - name: p
-      content: This object represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields are mutually exclusive.
+      content: This object represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields request_contact, request_location, and request_poll are mutually exclusive.
     - name: p
-      content: 'Note: request_contact and request_location options will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.'
+      content: 'Note: request_contact and request_location options will only work in Telegram versions released after 9 April, 2016. Older clients will display unsupported message.Note: request_poll option will only work in Telegram versions released after 23 January, 2020. Older clients will display unsupported message.'
     table:
     - Field: text
       Type: String
@@ -771,6 +854,18 @@ children:
     - Field: request_location
       Type: Boolean
       Description: Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only
+    - Field: request_poll
+      Type: KeyboardButtonPollType
+      Description: Optional. If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only
+  - name: KeyboardButtonPollType
+    children: []
+    desc:
+    - name: p
+      content: This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed.
+    table:
+    - Field: type
+      Type: String
+      Description: Optional. If quiz is passed, the user will be allowed to create only polls in the quiz mode. If regular is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.
   - name: ReplyKeyboardRemove
     children: []
     desc:
@@ -904,9 +999,15 @@ children:
     - Field: small_file_id
       Type: String
       Description: File identifier of small (160x160) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.
+    - Field: small_file_unique_id
+      Type: String
+      Description: Unique file identifier of small (160x160) chat photo, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     - Field: big_file_id
       Type: String
       Description: File identifier of big (640x640) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.
+    - Field: big_file_unique_id
+      Type: String
+      Description: Unique file identifier of big (640x640) chat photo, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
   - name: ChatMember
     children: []
     desc:
@@ -919,6 +1020,9 @@ children:
     - Field: status
       Type: String
       Description: The member's status in the chat. Can be “creator”, “administrator”, “member”, “restricted”, “left” or “kicked”
+    - Field: custom_title
+      Type: String
+      Description: Optional. Owner and administrators only. Custom title for this user
     - Field: until_date
       Type: Integer
       Description: Optional. Restricted and kicked only. Date when restrictions will be lifted for this user; unix time
@@ -997,6 +1101,18 @@ children:
     - Field: can_pin_messages
       Type: Boolean
       Description: Optional. True, if the user is allowed to pin messages. Ignored in public supergroups
+  - name: BotCommand
+    children: []
+    desc:
+    - name: p
+      content: This object represents a bot command.
+    table:
+    - Field: command
+      Type: String
+      Description: Text of the command, 1-32 characters. Can contain only lowercase English letters, digits and underscores.
+    - Field: description
+      Type: String
+      Description: Description of the command, 3-256 characters.
   - name: ResponseParameters
     children: []
     desc:
@@ -1035,7 +1151,7 @@ children:
       Description: File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More info on Sending Files »
     - Field: caption
       Type: String
-      Description: Optional. Caption of the photo to be sent, 0-1024 characters
+      Description: Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -1056,7 +1172,7 @@ children:
       Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
-      Description: Optional. Caption of the video to be sent, 0-1024 characters
+      Description: Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -1089,7 +1205,7 @@ children:
       Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
-      Description: Optional. Caption of the animation to be sent, 0-1024 characters
+      Description: Optional. Caption of the animation to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -1119,7 +1235,7 @@ children:
       Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
-      Description: Optional. Caption of the audio to be sent, 0-1024 characters
+      Description: Optional. Caption of the audio to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -1149,7 +1265,7 @@ children:
       Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
-      Description: Optional. Caption of the document to be sent, 0-1024 characters
+      Description: Optional. Caption of the document to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -1217,7 +1333,7 @@ children:
     - Parameter: text
       Type: String
       Required: 'Yes'
-      Description: Text of the message to be sent
+      Description: Text of the message to be sent, 1-4096 characters after entities parsing
     - Parameter: parse_mode
       Type: String
       Required: Optional
@@ -1242,19 +1358,76 @@ children:
     children: []
     desc:
     - name: p
-      content: The Bot API supports basic formatting for messages. You can use bold and italic text, as well as inline links and pre-formatted code in your bots' messages. Telegram clients will render them accordingly. You can use either markdown-style or HTML-style formatting.
+      content: The Bot API supports basic formatting for messages. You can use bold, italic, underlined and strikethrough text, as well as inline links and pre-formatted code in your bots' messages. Telegram clients will render them accordingly. You can use either markdown-style or HTML-style formatting.
     - name: p
       content: Note that Telegram clients will display an alert to the user before opening an inline link (‘Open this link?’ together with the full URL).
     - name: p
-      content: 'Links tg://user?id=<user_id> can be used to mention a user by their id without using a username. Please note:'
+      content: Message entities can be nested, providing following restrictions are met:- If two entities has common characters then one of them is fully contained inside another.- bold, italic, underline and strikethrough entities can contain and to be contained in any other entities, except pre and code.- All other entities can't contain each other.
+    - name: p
+      content: 'Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username. Please note:'
     - name: ul
       content:
       - These links will work only if they are used inside an inline link. For example, they will not work, when used in an inline keyboard button or in a message text.
       - These mentions are only guaranteed to work if the user has contacted the bot in the past, has sent a callback query to the bot via inline button or is a member in the group where he was mentioned.
     - name: h6
+      content: MarkdownV2 style
+    - name: p
+      content: 'To use this mode, pass MarkdownV2 in the parse_mode field. Use the following syntax in your message:'
+    - name: pre
+      content: |-
+        *bold \*text*
+        _italic \*text_
+        __underline__
+        ~strikethrough~
+        *bold _italic bold ~italic bold strikethrough~ __underline italic bold___ bold*
+        [inline URL](http://www.example.com/)
+        [inline mention of a user](tg://user?id=123456789)
+        `inline fixed-width code`
+        ```
+        pre-formatted fixed-width code block
+        ```
+        ```python
+        pre-formatted fixed-width code block written in the Python programming language
+        ```
+    - name: p
+      content: 'Please note:'
+    - name: ul
+      content:
+      - Any character between 1 and 126 inclusively can be escaped anywhere with a preceding '\' character, in which case it is treated as an ordinary character and not a part of the markup.
+      - Inside pre and code entities, all '`‘ and ’\‘ characters must be escaped with a preceding ’\' character.
+      - Inside (...) part of inline link definition, all ')‘ and ’\‘ must be escaped with a preceding ’\' character.
+      - In all other places characters '_‘, ’*‘, ’[‘, ’]‘, ’(‘, ’)‘, ’~‘, ’`‘, ’>‘, ’#‘, ’+‘, ’-‘, ’=‘, ’|‘, ’{‘, ’}‘, ’.‘, ’!‘ must be escaped with the preceding character ’\'.
+      - In case of ambiguity between italic and underline entities __ is always greadily treated from left to right as beginning or end of underline entity, so instead of ___italic underline___ use ___italic underline_\r__, where \r is a character with code 13, which will be ignored.
+    - name: h6
+      content: HTML style
+    - name: p
+      content: 'To use this mode, pass HTML in the parse_mode field. The following tags are currently supported:'
+    - name: pre
+      content: |-
+        <b>bold</b>, <strong>bold</strong>
+        <i>italic</i>, <em>italic</em>
+        <u>underline</u>, <ins>underline</ins>
+        <s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>
+        <b>bold <i>italic bold <s>italic bold strikethrough</s> <u>underline italic bold</u></i> bold</b>
+        <a href="http://www.example.com/">inline URL</a>
+        <a href="tg://user?id=123456789">inline mention of a user</a>
+        <code>inline fixed-width code</code>
+        <pre>pre-formatted fixed-width code block</pre>
+        <pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>
+    - name: p
+      content: 'Please note:'
+    - name: ul
+      content:
+      - Only the tags mentioned above are currently supported.
+      - All <, > and & symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (< with &lt;, > with &gt; and & with &amp;).
+      - All numerical HTML entities are supported.
+      - 'The API currently supports only the following named HTML entities: &lt;, &gt;, &amp; and &quot;.'
+      - Use nested pre and code tags, to define programming language for pre entity.
+      - Programming language can't be specified for standalone code tags.
+    - name: h6
       content: Markdown style
     - name: p
-      content: 'To use this mode, pass Markdown in the parse_mode field when using sendMessage. Use the following syntax in your message:'
+      content: 'This is a legacy mode, retained for backward compatibility. To use this mode, pass Markdown in the parse_mode field. Use the following syntax in your message:'
     - name: pre
       content: |-
         *bold text*
@@ -1262,30 +1435,20 @@ children:
         [inline URL](http://www.example.com/)
         [inline mention of a user](tg://user?id=123456789)
         `inline fixed-width code`
-        ```block_language
+        ```
         pre-formatted fixed-width code block
         ```
-    - name: h6
-      content: HTML style
-    - name: p
-      content: 'To use this mode, pass HTML in the parse_mode field when using sendMessage. The following tags are currently supported:'
-    - name: pre
-      content: |-
-        <b>bold</b>, <strong>bold</strong>
-        <i>italic</i>, <em>italic</em>
-        <a href="http://www.example.com/">inline URL</a>
-        <a href="tg://user?id=123456789">inline mention of a user</a>
-        <code>inline fixed-width code</code>
-        <pre>pre-formatted fixed-width code block</pre>
+        ```python
+        pre-formatted fixed-width code block written in the Python programming language
+        ```
     - name: p
       content: 'Please note:'
     - name: ul
       content:
-      - Only the tags mentioned above are currently supported.
-      - Tags must not be nested.
-      - All <, > and & symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (< with &lt;, > with &gt; and & with &amp;).
-      - All numerical HTML entities are supported.
-      - 'The API currently supports only the following named HTML entities: &lt;, &gt;, &amp; and &quot;.'
+      - Entities must not be nested, use parse mode MarkdownV2 instead.
+      - There is no way to specify underline and strikethrough entities, use parse mode MarkdownV2 instead.
+      - To escape characters '_‘, ’*‘, ’`‘, ’[‘ outside of an entity, prepend the characters ’\' before them.
+      - 'Escaping inside entities is not allowed, so entity must be closed first and reopened again: use _snake_\__case_ for italic snake_case and *2*\**2=4* for bold 2*2=4.'
   - name: forwardMessage
     children: []
     desc:
@@ -1325,7 +1488,7 @@ children:
     - Parameter: caption
       Type: String
       Required: Optional
-      Description: Photo caption (may also be used when resending photos by file_id), 0-1024 characters
+      Description: Photo caption (may also be used when resending photos by file_id), 0-1024 characters after entities parsing
     - Parameter: parse_mode
       Type: String
       Required: Optional
@@ -1361,7 +1524,7 @@ children:
     - Parameter: caption
       Type: String
       Required: Optional
-      Description: Audio caption, 0-1024 characters
+      Description: Audio caption, 0-1024 characters after entities parsing
     - Parameter: parse_mode
       Type: String
       Required: Optional
@@ -1415,7 +1578,7 @@ children:
     - Parameter: caption
       Type: String
       Required: Optional
-      Description: Document caption (may also be used when resending documents by file_id), 0-1024 characters
+      Description: Document caption (may also be used when resending documents by file_id), 0-1024 characters after entities parsing
     - Parameter: parse_mode
       Type: String
       Required: Optional
@@ -1465,7 +1628,7 @@ children:
     - Parameter: caption
       Type: String
       Required: Optional
-      Description: Video caption (may also be used when resending videos by file_id), 0-1024 characters
+      Description: Video caption (may also be used when resending videos by file_id), 0-1024 characters after entities parsing
     - Parameter: parse_mode
       Type: String
       Required: Optional
@@ -1519,7 +1682,7 @@ children:
     - Parameter: caption
       Type: String
       Required: Optional
-      Description: Animation caption (may also be used when resending animation by file_id), 0-1024 characters
+      Description: Animation caption (may also be used when resending animation by file_id), 0-1024 characters after entities parsing
     - Parameter: parse_mode
       Type: String
       Required: Optional
@@ -1540,7 +1703,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+      content: Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -1553,7 +1716,7 @@ children:
     - Parameter: caption
       Type: String
       Required: Optional
-      Description: Voice message caption, 0-1024 characters
+      Description: Voice message caption, 0-1024 characters after entities parsing
     - Parameter: parse_mode
       Type: String
       Required: Optional
@@ -1808,12 +1971,12 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to send a native poll. A native poll can't be sent to a private chat. On success, the sent Message is returned.
+      content: Use this method to send a native poll. On success, the sent Message is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
       Required: 'Yes'
-      Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername). A native poll can't be sent to a private chat.
+      Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     - Parameter: question
       Type: String
       Required: 'Yes'
@@ -1821,7 +1984,49 @@ children:
     - Parameter: options
       Type: Array of String
       Required: 'Yes'
-      Description: List of answer options, 2-10 strings 1-100 characters each
+      Description: A JSON-serialized list of answer options, 2-10 strings 1-100 characters each
+    - Parameter: is_anonymous
+      Type: Boolean
+      Required: Optional
+      Description: True, if the poll needs to be anonymous, defaults to True
+    - Parameter: type
+      Type: String
+      Required: Optional
+      Description: Poll type, “quiz” or “regular”, defaults to “regular”
+    - Parameter: allows_multiple_answers
+      Type: Boolean
+      Required: Optional
+      Description: True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False
+    - Parameter: correct_option_id
+      Type: Integer
+      Required: Optional
+      Description: 0-based identifier of the correct answer option, required for polls in quiz mode
+    - Parameter: is_closed
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the poll needs to be immediately closed. This can be useful for poll preview.
+    - Parameter: disable_notification
+      Type: Boolean
+      Required: Optional
+      Description: Sends the message silently. Users will receive a notification with no sound.
+    - Parameter: reply_to_message_id
+      Type: Integer
+      Required: Optional
+      Description: If the message is a reply, ID of the original message
+    - Parameter: reply_markup
+      Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
+      Required: Optional
+      Description: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+  - name: sendDice
+    children: []
+    desc:
+    - name: p
+      content: Use this method to send a dice, which will have a random value from 1 to 6. On success, the sent Message is returned. (Yes, we're aware of the “proper” singular of die. But it's awkward, and we decided to help it change. One dice at a time!)
+    table:
+    - Parameter: chat_id
+      Type: Integer or String
+      Required: 'Yes'
+      Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -1982,6 +2187,24 @@ children:
       Type: Boolean
       Required: Optional
       Description: Pass True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)
+  - name: setChatAdministratorCustomTitle
+    children: []
+    desc:
+    - name: p
+      content: Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns True on success.
+    table:
+    - Parameter: chat_id
+      Type: Integer or String
+      Required: 'Yes'
+      Description: Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+    - Parameter: user_id
+      Type: Integer
+      Required: 'Yes'
+      Description: Unique identifier of the target user
+    - Parameter: custom_title
+      Type: String
+      Required: 'Yes'
+      Description: New custom title for the administrator; 0-16 characters, emoji are not allowed
   - name: setChatPermissions
     children: []
     desc:
@@ -2194,6 +2417,21 @@ children:
       Type: Integer
       Required: Optional
       Description: The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.
+  - name: setMyCommands
+    children: []
+    desc:
+    - name: p
+      content: Use this method to change the list of the bot's commands. Returns True on success.
+    table:
+    - Parameter: commands
+      Type: Array of BotCommand
+      Required: 'Yes'
+      Description: A JSON-serialized list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
+  - name: getMyCommands
+    children: []
+    desc:
+    - name: p
+      content: Use this method to get the current list of the bot's commands. Requires no parameters. Returns Array of BotCommand on success.
   - name: Inline mode methods
     children: []
     desc:
@@ -2225,7 +2463,7 @@ children:
     - Parameter: text
       Type: String
       Required: 'Yes'
-      Description: New text of the message
+      Description: New text of the message, 1-4096 characters after entities parsing
     - Parameter: parse_mode
       Type: String
       Required: Optional
@@ -2259,7 +2497,7 @@ children:
     - Parameter: caption
       Type: String
       Required: Optional
-      Description: New caption of the message
+      Description: New caption of the message, 0-1024 characters after entities parsing
     - Parameter: parse_mode
       Type: String
       Required: Optional
@@ -2338,7 +2576,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots can delete incoming messages in private chats.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.
+      content: Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots can delete incoming messages in private chats.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2363,7 +2601,10 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Identifier for this file
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     - Field: width
       Type: Integer
       Description: Sticker width
@@ -2375,7 +2616,7 @@ children:
       Description: True, if the sticker is animated
     - Field: thumb
       Type: PhotoSize
-      Description: Optional. Sticker thumbnail in the .webp or .jpg format
+      Description: Optional. Sticker thumbnail in the .WEBP or .JPG format
     - Field: emoji
       Type: String
       Description: Optional. Emoji associated with the sticker
@@ -2409,6 +2650,9 @@ children:
     - Field: stickers
       Type: Array of Sticker
       Description: List of all set stickers
+    - Field: thumb
+      Type: PhotoSize
+      Description: Optional. Sticker set thumbnail in the .WEBP or .TGS format
   - name: MaskPosition
     children: []
     desc:
@@ -2440,7 +2684,7 @@ children:
     - Parameter: sticker
       Type: InputFile or String
       Required: 'Yes'
-      Description: Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
+      Description: Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -2467,7 +2711,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to upload a .png file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.
+      content: Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.
     table:
     - Parameter: user_id
       Type: Integer
@@ -2481,7 +2725,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set. Returns True on success.
+      content: Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker or tgs_sticker. Returns True on success.
     table:
     - Parameter: user_id
       Type: Integer
@@ -2497,8 +2741,12 @@ children:
       Description: Sticker set title, 1-64 characters
     - Parameter: png_sticker
       Type: InputFile or String
-      Required: 'Yes'
-      Description: Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
+      Required: Optional
+      Description: PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
+    - Parameter: tgs_sticker
+      Type: InputFile
+      Required: Optional
+      Description: TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements
     - Parameter: emojis
       Type: String
       Required: 'Yes'
@@ -2515,7 +2763,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to add a new sticker to a set created by the bot. Returns True on success.
+      content: Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker or tgs_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.
     table:
     - Parameter: user_id
       Type: Integer
@@ -2528,7 +2776,11 @@ children:
     - Parameter: png_sticker
       Type: InputFile or String
       Required: 'Yes'
-      Description: Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
+      Description: PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
+    - Parameter: tgs_sticker
+      Type: InputFile
+      Required: Optional
+      Description: TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements
     - Parameter: emojis
       Type: String
       Required: 'Yes'
@@ -2541,7 +2793,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to move a sticker in a set created by the bot to a specific position . Returns True on success.
+      content: Use this method to move a sticker in a set created by the bot to a specific position. Returns True on success.
     table:
     - Parameter: sticker
       Type: String
@@ -2561,6 +2813,24 @@ children:
       Type: String
       Required: 'Yes'
       Description: File identifier of the sticker
+  - name: setStickerSetThumb
+    children: []
+    desc:
+    - name: p
+      content: Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Returns True on success.
+    table:
+    - Parameter: name
+      Type: String
+      Required: 'Yes'
+      Description: Sticker set name
+    - Parameter: user_id
+      Type: Integer
+      Required: 'Yes'
+      Description: User identifier of the sticker set owner
+    - Parameter: thumb
+      Type: InputFile or String
+      Required: Optional
+      Description: A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/animated_stickers#technical-requirements for animated sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files ». Animated sticker set thumbnail can't be uploaded via HTTP URL.
   desc:
   - name: p
     content: The following methods and objects allow your bot to handle stickers and sticker sets.
@@ -2583,7 +2853,7 @@ children:
       Description: Optional. Sender location, only for bots that request user location
     - Field: query
       Type: String
-      Description: Text of the query (up to 512 characters)
+      Description: Text of the query (up to 256 characters)
     - Field: offset
       Type: String
       Description: Offset of the results to be returned, can be controlled by the bot
@@ -2719,7 +2989,7 @@ children:
       Description: Optional. Short description of the result
     - Field: caption
       Type: String
-      Description: Optional. Caption of the photo to be sent, 0-1024 characters
+      Description: Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -2761,7 +3031,7 @@ children:
       Description: Optional. Title for the result
     - Field: caption
       Type: String
-      Description: Optional. Caption of the GIF file to be sent, 0-1024 characters
+      Description: Optional. Caption of the GIF file to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -2803,7 +3073,7 @@ children:
       Description: Optional. Title for the result
     - Field: caption
       Type: String
-      Description: Optional. Caption of the MPEG-4 file to be sent, 0-1024 characters
+      Description: Optional. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -2841,7 +3111,7 @@ children:
       Description: Title for the result
     - Field: caption
       Type: String
-      Description: Optional. Caption of the video to be sent, 0-1024 characters
+      Description: Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -2885,7 +3155,7 @@ children:
       Description: Title
     - Field: caption
       Type: String
-      Description: Optional. Caption, 0-1024 characters
+      Description: Optional. Caption, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -2905,7 +3175,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Represents a link to a voice recording in an .ogg container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the the voice message.
+      content: Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the the voice message.
     - name: p
       content: 'Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.'
     table:
@@ -2923,7 +3193,7 @@ children:
       Description: Recording title
     - Field: caption
       Type: String
-      Description: Optional. Caption, 0-1024 characters
+      Description: Optional. Caption, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -2955,7 +3225,7 @@ children:
       Description: Title for the result
     - Field: caption
       Type: String
-      Description: Optional. Caption of the document to be sent, 0-1024 characters
+      Description: Optional. Caption of the document to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -3155,7 +3425,7 @@ children:
       Description: Optional. Short description of the result
     - Field: caption
       Type: String
-      Description: Optional. Caption of the photo to be sent, 0-1024 characters
+      Description: Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -3185,7 +3455,7 @@ children:
       Description: Optional. Title for the result
     - Field: caption
       Type: String
-      Description: Optional. Caption of the GIF file to be sent, 0-1024 characters
+      Description: Optional. Caption of the GIF file to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -3215,7 +3485,7 @@ children:
       Description: Optional. Title for the result
     - Field: caption
       Type: String
-      Description: Optional. Caption of the MPEG-4 file to be sent, 0-1024 characters
+      Description: Optional. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -3273,7 +3543,7 @@ children:
       Description: Optional. Short description of the result
     - Field: caption
       Type: String
-      Description: Optional. Caption of the document to be sent, 0-1024 characters
+      Description: Optional. Caption of the document to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -3306,7 +3576,7 @@ children:
       Description: Optional. Short description of the result
     - Field: caption
       Type: String
-      Description: Optional. Caption of the video to be sent, 0-1024 characters
+      Description: Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -3338,7 +3608,7 @@ children:
       Description: Voice message title
     - Field: caption
       Type: String
-      Description: Optional. Caption, 0-1024 characters
+      Description: Optional. Caption, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -3367,7 +3637,7 @@ children:
       Description: A valid file identifier for the audio file
     - Field: caption
       Type: String
-      Description: Optional. Caption, 0-1024 characters
+      Description: Optional. Caption, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
       Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
@@ -3527,7 +3797,7 @@ children:
     - Parameter: prices
       Type: Array of LabeledPrice
       Required: 'Yes'
-      Description: Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
+      Description: Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
     - Parameter: provider_data
       Type: String
       Required: Optional
@@ -3815,7 +4085,10 @@ children:
     table:
     - Field: file_id
       Type: String
-      Description: Identifier for this file
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
     - Field: file_size
       Type: Integer
       Description: File size
