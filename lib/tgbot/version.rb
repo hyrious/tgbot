@@ -1,3 +1,3 @@
 class Tgbot
-  VERSION = '0.2.7'.freeze
+  VERSION = '0.3.2'.freeze
 end

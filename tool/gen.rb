@@ -1,7 +1,8 @@
-require 'http'
+require 'net/http'
 require 'nokogiri'
 
-raw = HTTP.via('127.0.0.1', 1080).get('https://core.telegram.org/bots/api').to_s
+uri = URI('https://core.telegram.org/bots/api')
+raw = Net::HTTP.get(uri)
 nodes = Nokogiri::HTML(raw).at('#dev_page_content').children
 ret = [{ name: 'Telegram Bot API', children: [] }]
 uplevels = [2]
@@ -27,6 +28,7 @@ nodes.each do |node|
     end
   end
 end
+require 'json'
 ret = JSON.parse JSON.generate ret[0]
 require 'psych'
 open(File.expand_path('../lib/api.yaml', __dir__), 'wb') { |f| Psych.dump ret, f, line_width: 1<<30 }

@@ -3,51 +3,144 @@ name: Telegram Bot API
 children:
 - name: Recent changes
   children:
-  - name: March 30, 2020
+  - name: April 26, 2021
     children: []
     desc:
     - name: p
-      content: Bot API 4.7
+      content: Bot API 5.2
     - name: ul
       content:
-      - Added the method sendDice for sending a dice message, which will have a random value from 1 to 6. (Yes, we're aware of the “proper” singular of die. But it's awkward, and we decided to help it change. One dice at a time!)
-      - Added the field dice to the Message object.
-      - Added the method getMyCommands for getting the current list of the bot's commands.
-      - Added the method setMyCommands for changing the list of the bot's commands through the Bot API instead of @BotFather.
-      - Added the ability to create animated sticker sets by specifying the parameter tgs_sticker instead of png_sticker in the method createNewStickerSet.
-      - Added the ability to add animated stickers to sets created by the bot by specifying the parameter tgs_sticker instead of png_sticker in the method addStickerToSet.
-      - Added the field thumb to the StickerSet object.
-      - Added the ability to change thumbnails of sticker sets created by the bot using the method setStickerSetThumb.
-  - name: January 23, 2020
+      - Support for Payments 2.0, see this manual for more details about the Bot Payments API.
+      - Added the type InputInvoiceMessageContent to support sending invoices as inline query results.
+      - Allowed sending invoices to group, supergroup and channel chats.
+      - Added the fields max_tip_amount and suggested_tip_amounts to the method sendInvoice to allow adding optional tips to the payment.
+      - The parameter start_parameter of the method sendInvoice became optional. If the parameter isn't specified, the invoice can be paid directly from forwarded messages.
+      - Added the field chat_type to the class InlineQuery, containing the type of the chat, from which the inline request was sent.
+      - Added the type VoiceChatScheduled and the field voice_chat_scheduled to the class Message.
+      - Fixed an error in sendChatAction documentation to correctly mention “record_voice” and “upload_voice” instead of “record_audio” and “upload_audio” for related to voice note actions. Old action names will still work for backward compatibility.
+    - name: blockquote
+      content: WARNING! After the next Bot API update (Bot API 5.3) there will be a one-time change of the value of the field file_unique_id in objects of the type PhotoSize and of the fields small_file_unique_id and big_file_unique_id in objects of the type ChatPhoto.
+    - name: blockquote
+      content: WARNING! Service messages about non-bot users joining the chat will be soon removed from large groups. We recommend using the “chat_member” update as a replacement.
+    - name: blockquote
+      content: WARNING! After one of the upcoming Bot API updates, user identifiers will become bigger than 2^31 - 1 and it will be no longer possible to store them in a signed 32-bit integer type. User identifiers will have up to 52 significant bits, so a 64-bit integer or double-precision float type would still be safe for storing them. Please make sure that your code can correctly handle such user identifiers.
+  - name: March 9, 2021
     children: []
     desc:
     - name: p
-      content: Bot API 4.6
+      content: Bot API 5.1
+    - name: p
+      content: Added two new update types
     - name: ul
       content:
-      - Supported Polls 2.0.
-      - 'Added the ability to send non-anonymous, multiple answer, and quiz-style polls: added the parameters is_anonymous, type, allows_multiple_answers, correct_option_id, is_closed options to the method sendPoll.'
-      - Added the object KeyboardButtonPollType and the field request_poll to the object KeyboardButton.
-      - Added updates about changes of user answers in non-anonymous polls, represented by the object PollAnswer and the field poll_answer in the Update object.
-      - Added the fields total_voter_count, is_anonymous, type, allows_multiple_answers, correct_option_id to the Poll object.
-      - Bots can now send polls to private chats.
-      - 'Added more information about the bot in response to the getMe request: added the fields can_join_groups, can_read_all_group_messages and supports_inline_queries to the User object.'
-      - Added the optional field language to the MessageEntity object.
-  - name: December 31, 2019
+      - Added updates about member status changes in chats, represented by the class ChatMemberUpdated and the fields my_chat_member and chat_member in the Update class. The bot must be an administrator in the chat to receive chat_member updates about other chat members. By default, only my_chat_member updates about the bot itself are received.
+    - name: p
+      content: Improved Invite Links
+    - name: ul
+      content:
+      - Added the class ChatInviteLink, representing an invite link to a chat.
+      - Added the method createChatInviteLink, which can be used to create new invite links in addition to the primary invite link.
+      - Added the method editChatInviteLink, which can be used to edit non-primary invite links created by the bot.
+      - Added the method revokeChatInviteLink, which can be used to revoke invite links created by the bot.
+    - name: p
+      content: Voice Chat Info
+    - name: ul
+      content:
+      - Added the type VoiceChatStarted and the field voice_chat_started to the class Message.
+      - Added the type VoiceChatEnded and the field voice_chat_ended to the class Message.
+      - Added the type VoiceChatParticipantsInvited and the field voice_chat_participants_invited to the class Message.
+      - Added the new administrator privilege can_manage_voice_chats to the class ChatMember and parameter can_manage_voice_chats to the method promoteChatMember. For now, bots can use this privilege only for passing to other administrators.
+    - name: p
+      content: And More
+    - name: ul
+      content:
+      - Added the type MessageAutoDeleteTimerChanged and the field message_auto_delete_timer_changed to the class Message.
+      - Added the parameter revoke_messages to the method kickChatMember, allowing to delete all messages from a group for the user who is being removed.
+      - Added the new administrator privilege can_manage_chat to the class ChatMember and parameter can_manage_chat to the method promoteChatMember. This administrator right is implied by any other administrator privilege.
+      - Supported the new bowling animation for the random dice. Choose between different animations (dice, darts, basketball, football, bowling, slot machine) by specifying the emoji parameter in the method sendDice.
+    - name: blockquote
+      content: WARNING! After one of the upcoming Bot API updates, some user identifiers will become bigger than 2^31 - 1 and it will be no longer possible to store them in a signed 32-bit integer type. User identifiers will have up to 52 significant bits, so a 64-bit integer or double-precision float type would still be safe for storing them. Please make sure that your code can correctly handle such user identifiers.
+  - name: November 4, 2020
     children: []
     desc:
     - name: p
-      content: Bot API 4.5
+      content: Introducing Bot API 5.0
+    - name: p
+      content: Run Your Own Bot API Server
     - name: ul
       content:
-      - Added support for two new MessageEntity types, underline and strikethrough.
-      - Added support for nested MessageEntity objects. Entities can now contain other entities. If two entities have common characters then one of them is fully contained inside the other.
-      - Added support for nested entities and the new tags <u>/<ins> (for underlined text) and <s>/<strike>/<del> (for strikethrough text) in parse mode HTML.
-      - Added a new parse mode, MarkdownV2, which supports nested entities and two new entities __ (for underlined text) and ~ (for strikethrough text). Parse mode Markdown remains unchanged for backward compatibility.
-      - Added the field file_unique_id to the objects Animation, Audio, Document, PassportFile, PhotoSize, Sticker, Video, VideoNote, Voice, File and the fields small_file_unique_id and big_file_unique_id to the object ChatPhoto. The new fields contain a unique file identifier, which is supposed to be the same over time and for different bots, but can't be used to download or reuse the file.
-      - Added the field custom_title to the ChatMember object.
-      - Added the new method setChatAdministratorCustomTitle to manage the custom titles of administrators promoted by the bot.
-      - Added the field slow_mode_delay to the Chat object.
+      - Bot API source code is now available at telegram-bot-api. You can now run your own Bot API server locally, boosting your bots' performance (check this out to see if this will benefit your project).
+      - Added the method logOut, which can be used to log out from the cloud Bot API server before launching your bot locally. You must log out the bot before running it locally, otherwise there is no guarantee that the bot will receive all updates.
+      - Added the method close, which can be used to close the bot instance before moving it from one local server to another.
+    - name: p
+      content: Transfer Bot Ownership
+    - name: ul
+      content:
+      - You can now use @BotFather to transfer your existing bots to another Telegram account.
+    - name: p
+      content: Webhooks
+    - name: ul
+      content:
+      - Added the parameter ip_address to the method setWebhook, allowing to bypass DNS resolving and use the specified fixed IP address to send webhook requests.
+      - Added the field ip_address to the class WebhookInfo, containing the current IP address used for webhook connections creation.
+      - Added the ability to drop all pending updates when changing webhook URL using the parameter drop_pending_updates in the methods setWebhook and deleteWebhook.
+    - name: p
+      content: Working with Groups
+    - name: ul
+      content:
+      - The getChat request now returns the user's bio for private chats if available.
+      - The getChat request now returns the identifier of the linked chat for supergroups and channels, i.e. the discussion group identifier for a channel and vice versa.
+      - The getChat request now returns the location to which the supergroup is connected (see Local Groups). Added the class ChatLocation to represent the location.
+      - Added the parameter only_if_banned to the method unbanChatMember to allow safe unban.
+    - name: p
+      content: Working with Files
+    - name: ul
+      content:
+      - Added the field file_name to the classes Audio and Video, containing the name of the original file.
+      - Added the ability to disable server-side file content type detection using the parameter disable_content_type_detection in the method sendDocument and the class inputMediaDocument.
+    - name: p
+      content: Multiple Pinned Messages
+    - name: ul
+      content:
+      - Added the ability to pin messages in private chats.
+      - Added the parameter message_id to the method unpinChatMessage to allow unpinning of the specific pinned message.
+      - Added the method unpinAllChatMessages, which can be used to unpin all pinned messages in a chat.
+    - name: p
+      content: File Albums
+    - name: ul
+      content:
+      - Added support for sending and receiving audio and document albums in the method sendMediaGroup.
+    - name: p
+      content: Live Locations
+    - name: ul
+      content:
+      - Added the field live_period to the class Location, representing a maximum period for which the live location can be updated.
+      - 'Added support for live location heading: added the field heading to the classes Location, InlineQueryResultLocation, InputLocationMessageContent and the parameter heading to the methods sendLocation and editMessageLiveLocation.'
+      - 'Added support for proximity alerts in live locations: added the field proximity_alert_radius to the classes Location, InlineQueryResultLocation, InputLocationMessageContent and the parameter proximity_alert_radius to the methods sendLocation and editMessageLiveLocation.'
+      - Added the type ProximityAlertTriggered and the field proximity_alert_triggered to the class Message.
+      - Added possibility to specify the horizontal accuracy of a location. Added the field horizontal_accuracy to the classes Location, InlineQueryResultLocation, InputLocationMessageContent and the parameter horizontal_accuracy to the methods sendLocation and editMessageLiveLocation.
+    - name: p
+      content: Anonymous Admins
+    - name: ul
+      content:
+      - Added the field sender_chat to the class Message, containing the sender of a message which is a chat (group or channel). For backward compatibility in non-channel chats, the field from in such messages will contain the user 777000 for messages automatically forwarded to the discussion group and the user 1087968824 (@GroupAnonymousBot) for messages from anonymous group administrators.
+      - Added the field is_anonymous to the class chatMember, which can be used to distinguish anonymous chat administrators.
+      - Added the parameter is_anonymous to the method promoteChatMember, which allows to promote anonymous chat administrators. The bot itself should have the is_anonymous right to do this. Despite the fact that bots can have the is_anonymous right, they will never appear as anonymous in the chat. Bots can use the right only for passing to other administrators.
+      - Added the custom title of an anonymous message sender to the class Message as author_signature.
+    - name: p
+      content: And More
+    - name: ul
+      content:
+      - Added the method copyMessage, which sends a copy of any message.
+      - Maximum poll question length increased to 300.
+      - Added the ability to manually specify text entities instead of specifying the parse_mode in the classes InputMediaPhoto, InputMediaVideo, InputMediaAnimation, InputMediaAudio, InputMediaDocument, InlineQueryResultPhoto, InlineQueryResultGif, InlineQueryResultMpeg4Gif, InlineQueryResultVideo, InlineQueryResultAudio, InlineQueryResultVoice, InlineQueryResultDocument, InlineQueryResultCachedPhoto, InlineQueryResultCachedGif, InlineQueryResultCachedMpeg4Gif, InlineQueryResultCachedVideo, InlineQueryResultCachedAudio, InlineQueryResultCachedVoice, InlineQueryResultCachedDocument, InputTextMessageContent and the methods sendMessage, sendPhoto, sendVideo, sendAnimation, sendAudio, sendDocument, sendVoice, sendPoll, editMessageText, editMessageCaption.
+      - Added the fields google_place_id and google_place_type to the classes Venue, InlineQueryResultVenue, InputVenueMessageContent and the optional parameters google_place_id and google_place_type to the method sendVenue to support Google Places as a venue API provider.
+      - Added the field allow_sending_without_reply to the methods sendMessage, sendPhoto, sendVideo, sendAnimation, sendAudio, sendDocument, sendSticker, sendVideoNote, sendVoice, sendLocation, sendVenue, sendContact, sendPoll, sendDice, sendInvoice, sendGame, sendMediaGroup to allow sending messages not a as reply if the replied-to message has already been deleted.
+    - name: p
+      content: And Last but bot Least
+    - name: ul
+      content:
+      - Supported the new football and slot machine animations for the random dice. Choose between different animations (dice, darts, basketball, football, slot machine) by specifying the emoji parameter in the method sendDice.
     - name: p
       content: See earlier changes »
   desc:
@@ -81,11 +174,31 @@ children:
     - application/json (except for uploading files)
     - multipart/form-data (use to upload files)
   - name: p
-    content: The response contains a JSON object, which always has a Boolean field ‘ok’ and may have an optional String field ‘description’ with a human-readable description of the result. If ‘ok’ equals true, the request was successful and the result of the query can be found in the ‘result’ field. In case of an unsuccessful request, ‘ok’ equals false and the error is explained in the ‘description’. An Integer ‘error_code’ field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field ‘parameters’ of the type ResponseParameters, which can help to automatically handle the error.
+    content: The response contains a JSON object, which always has a Boolean field 'ok' and may have an optional String field 'description' with a human-readable description of the result. If 'ok' equals true, the request was successful and the result of the query can be found in the 'result' field. In case of an unsuccessful request, 'ok' equals false and the error is explained in the 'description'. An Integer 'error_code' field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field 'parameters' of the type ResponseParameters, which can help to automatically handle the error.
   - name: ul
     content:
     - All methods in the Bot API are case-insensitive.
     - All queries must be made using UTF-8.
+- name: Using a Local Bot API Server
+  children:
+  - name: Do I need a Local Bot API Server
+    children: []
+    desc:
+    - name: p
+      content: The majority of bots will be OK with the default configuration, running on our servers. But if you feel that you need one of these features, you're welcome to switch to your own at any time.
+  desc:
+  - name: p
+    content: 'The Bot API server source code is available at telegram-bot-api. You can run it locally and send the requests to your own server instead of https://api.telegram.org. If you switch to a local Bot API server, your bot will be able to:'
+  - name: ul
+    content:
+    - Download files without a size limit.
+    - Upload files up to 2000 MB.
+    - Upload files using their local path and the file URI scheme.
+    - Use an HTTP URL for the webhook.
+    - Use any local IP address for the webhook.
+    - Use any port for the webhook.
+    - Set max_webhook_connections up to 100000.
+    - Receive the absolute local path as a value of the file_path field without the need to download the file after a getFile request.
 - name: Getting updates
   children:
   - name: Update
@@ -96,7 +209,7 @@ children:
     table:
     - Field: update_id
       Type: Integer
-      Description: The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
+      Description: The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you're using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
     - Field: message
       Type: Message
       Description: Optional. New incoming message of any kind — text, photo, sticker, etc.
@@ -130,6 +243,12 @@ children:
     - Field: poll_answer
       Type: PollAnswer
       Description: Optional. A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.
+    - Field: my_chat_member
+      Type: ChatMemberUpdated
+      Description: Optional. The bot's chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.
+    - Field: chat_member
+      Type: ChatMemberUpdated
+      Description: Optional. A chat member's status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify “chat_member” in the list of allowed_updates to receive these updates.
   - name: getUpdates
     children: []
     desc:
@@ -145,7 +264,7 @@ children:
     - Parameter: limit
       Type: Integer
       Required: Optional
-      Description: Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100.
+      Description: Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.
     - Parameter: timeout
       Type: Integer
       Required: Optional
@@ -153,14 +272,14 @@ children:
     - Parameter: allowed_updates
       Type: Array of String
       Required: Optional
-      Description: A JSON-serialized list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.
+      Description: A JSON-serialized list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.
   - name: setWebhook
     children: []
     desc:
     - name: p
       content: Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.
     - name: p
-      content: If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. https://www.example.com/<token>. Since nobody else knows your bot‘s token, you can be pretty sure it’s us.
+      content: If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. https://www.example.com/<token>. Since nobody else knows your bot's token, you can be pretty sure it's us.
     - name: blockquote
       content: |-
         Notes1. You will not be able to receive updates using getUpdates for as long as an outgoing webhook is set up.2. To use a self-signed certificate, you need to upload your public key certificate using certificate parameter. Please upload as InputFile, sending a String will not work.3. Ports currently supported for Webhooks: 443, 80, 88, 8443.
@@ -174,19 +293,32 @@ children:
       Type: InputFile
       Required: Optional
       Description: Upload your public key certificate so that the root certificate in use can be checked. See our self-signed guide for details.
+    - Parameter: ip_address
+      Type: String
+      Required: Optional
+      Description: The fixed IP address which will be used to send webhook requests instead of the IP address resolved through DNS
     - Parameter: max_connections
       Type: Integer
       Required: Optional
-      Description: Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot‘s server, and higher values to increase your bot’s throughput.
+      Description: Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server, and higher values to increase your bot's throughput.
     - Parameter: allowed_updates
       Type: Array of String
       Required: Optional
-      Description: A JSON-serialized list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
+      Description: A JSON-serialized list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
+    - Parameter: drop_pending_updates
+      Type: Boolean
+      Required: Optional
+      Description: Pass True to drop all pending updates
   - name: deleteWebhook
     children: []
     desc:
     - name: p
-      content: Use this method to remove webhook integration if you decide to switch back to getUpdates. Returns True on success. Requires no parameters.
+      content: Use this method to remove webhook integration if you decide to switch back to getUpdates. Returns True on success.
+    table:
+    - Parameter: drop_pending_updates
+      Type: Boolean
+      Required: Optional
+      Description: Pass True to drop all pending updates
   - name: getWebhookInfo
     children: []
     desc:
@@ -207,6 +339,9 @@ children:
     - Field: pending_update_count
       Type: Integer
       Description: Number of updates awaiting delivery
+    - Field: ip_address
+      Type: String
+      Description: Optional. Currently used webhook IP address
     - Field: last_error_date
       Type: Integer
       Description: Optional. Unix time for the most recent error that happened when trying to deliver an update via webhook
@@ -218,7 +353,7 @@ children:
       Description: Optional. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
     - Field: allowed_updates
       Type: Array of String
-      Description: Optional. A list of update types the bot is subscribed to. Defaults to all update types
+      Description: Optional. A list of update types the bot is subscribed to. Defaults to all update types except chat_member
   desc:
   - name: p
     content: There are two mutually exclusive ways of receiving updates for your bot — the getUpdates method on one hand and Webhooks on the other. Incoming updates are stored on the server until the bot receives them either way, but they will not be kept longer than 24 hours.
@@ -234,19 +369,19 @@ children:
     table:
     - Field: id
       Type: Integer
-      Description: Unique identifier for this user or bot
+      Description: Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
     - Field: is_bot
       Type: Boolean
       Description: True, if this user is a bot
     - Field: first_name
       Type: String
-      Description: User‘s or bot’s first name
+      Description: User's or bot's first name
     - Field: last_name
       Type: String
-      Description: Optional. User‘s or bot’s last name
+      Description: Optional. User's or bot's last name
     - Field: username
       Type: String
-      Description: Optional. User‘s or bot’s username
+      Description: Optional. User's or bot's username
     - Field: language_code
       Type: String
       Description: Optional. IETF language tag of the user's language
@@ -267,7 +402,7 @@ children:
     table:
     - Field: id
       Type: Integer
-      Description: Unique identifier for this chat. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+      Description: Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
     - Field: type
       Type: String
       Description: Type of chat, can be either “private”, “group”, “supergroup” or “channel”
@@ -286,27 +421,39 @@ children:
     - Field: photo
       Type: ChatPhoto
       Description: Optional. Chat photo. Returned only in getChat.
+    - Field: bio
+      Type: String
+      Description: Optional. Bio of the other party in a private chat. Returned only in getChat.
     - Field: description
       Type: String
       Description: Optional. Description, for groups, supergroups and channel chats. Returned only in getChat.
     - Field: invite_link
       Type: String
-      Description: Optional. Chat invite link, for groups, supergroups and channel chats. Each administrator in a chat generates their own invite links, so the bot must first generate the link using exportChatInviteLink. Returned only in getChat.
+      Description: Optional. Primary invite link, for groups, supergroups and channel chats. Returned only in getChat.
     - Field: pinned_message
       Type: Message
-      Description: Optional. Pinned message, for groups, supergroups and channels. Returned only in getChat.
+      Description: Optional. The most recent pinned message (by sending date). Returned only in getChat.
     - Field: permissions
       Type: ChatPermissions
       Description: Optional. Default chat member permissions, for groups and supergroups. Returned only in getChat.
     - Field: slow_mode_delay
       Type: Integer
       Description: Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user. Returned only in getChat.
+    - Field: message_auto_delete_time
+      Type: Integer
+      Description: Optional. The time after which all messages sent to the chat will be automatically deleted; in seconds. Returned only in getChat.
     - Field: sticker_set_name
       Type: String
       Description: Optional. For supergroups, name of group sticker set. Returned only in getChat.
     - Field: can_set_sticker_set
       Type: Boolean
       Description: Optional. True, if the bot can change the group sticker set. Returned only in getChat.
+    - Field: linked_chat_id
+      Type: Integer
+      Description: Optional. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier. Returned only in getChat.
+    - Field: location
+      Type: ChatLocation
+      Description: Optional. For supergroups, the location to which the supergroup is connected. Returned only in getChat.
   - name: Message
     children: []
     desc:
@@ -319,6 +466,9 @@ children:
     - Field: from
       Type: User
       Description: Optional. Sender, empty for messages sent to channels
+    - Field: sender_chat
+      Type: Chat
+      Description: Optional. Sender of the message, sent on behalf of a chat. The channel itself for channel messages. The supergroup itself for messages from anonymous group administrators. The linked channel for messages automatically forwarded to the discussion group
     - Field: date
       Type: Integer
       Description: Date the message was sent in Unix time
@@ -330,7 +480,7 @@ children:
       Description: Optional. For forwarded messages, sender of the original message
     - Field: forward_from_chat
       Type: Chat
-      Description: Optional. For messages forwarded from channels, information about the original channel
+      Description: Optional. For messages forwarded from channels or from anonymous administrators, information about the original sender chat
     - Field: forward_from_message_id
       Type: Integer
       Description: Optional. For messages forwarded from channels, identifier of the original message in the channel
@@ -346,6 +496,9 @@ children:
     - Field: reply_to_message
       Type: Message
       Description: Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+    - Field: via_bot
+      Type: User
+      Description: Optional. Bot through which the message was sent
     - Field: edit_date
       Type: Integer
       Description: Optional. Date the message was last edited in Unix time
@@ -354,28 +507,22 @@ children:
       Description: Optional. The unique identifier of a media message group this message belongs to
     - Field: author_signature
       Type: String
-      Description: Optional. Signature of the post author for messages in channels
+      Description: Optional. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator
     - Field: text
       Type: String
       Description: Optional. For text messages, the actual UTF-8 text of the message, 0-4096 characters
     - Field: entities
       Type: Array of MessageEntity
       Description: Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
-    - Field: caption_entities
-      Type: Array of MessageEntity
-      Description: Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
+    - Field: animation
+      Type: Animation
+      Description: Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
     - Field: audio
       Type: Audio
       Description: Optional. Message is an audio file, information about the file
     - Field: document
       Type: Document
       Description: Optional. Message is a general file, information about the file
-    - Field: animation
-      Type: Animation
-      Description: Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
-    - Field: game
-      Type: Game
-      Description: Optional. Message is a game, information about the game. More about games »
     - Field: photo
       Type: Array of PhotoSize
       Description: Optional. Message is a photo, available sizes of the photo
@@ -385,30 +532,36 @@ children:
     - Field: video
       Type: Video
       Description: Optional. Message is a video, information about the video
-    - Field: voice
-      Type: Voice
-      Description: Optional. Message is a voice message, information about the file
     - Field: video_note
       Type: VideoNote
       Description: Optional. Message is a video note, information about the video message
+    - Field: voice
+      Type: Voice
+      Description: Optional. Message is a voice message, information about the file
     - Field: caption
       Type: String
       Description: Optional. Caption for the animation, audio, document, photo, video or voice, 0-1024 characters
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
     - Field: contact
       Type: Contact
       Description: Optional. Message is a shared contact, information about the contact
-    - Field: location
-      Type: Location
-      Description: Optional. Message is a shared location, information about the location
-    - Field: venue
-      Type: Venue
-      Description: Optional. Message is a venue, information about the venue
+    - Field: dice
+      Type: Dice
+      Description: Optional. Message is a dice with random value
+    - Field: game
+      Type: Game
+      Description: Optional. Message is a game, information about the game. More about games »
     - Field: poll
       Type: Poll
       Description: Optional. Message is a native poll, information about the poll
-    - Field: dice
-      Type: Dice
-      Description: Optional. Message is a dice with random value from 1 to 6
+    - Field: venue
+      Type: Venue
+      Description: Optional. Message is a venue, information about the venue. For backward compatibility, when this field is set, the location field will also be set
+    - Field: location
+      Type: Location
+      Description: Optional. Message is a shared location, information about the location
     - Field: new_chat_members
       Type: Array of User
       Description: Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
@@ -429,16 +582,19 @@ children:
       Description: 'Optional. Service message: the group has been created'
     - Field: supergroup_chat_created
       Type: 'True'
-      Description: 'Optional. Service message: the supergroup has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.'
+      Description: 'Optional. Service message: the supergroup has been created. This field can''t be received in a message coming through updates, because bot can''t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.'
     - Field: channel_chat_created
       Type: 'True'
-      Description: 'Optional. Service message: the channel has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.'
+      Description: 'Optional. Service message: the channel has been created. This field can''t be received in a message coming through updates, because bot can''t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.'
+    - Field: message_auto_delete_timer_changed
+      Type: MessageAutoDeleteTimerChanged
+      Description: 'Optional. Service message: auto-delete timer settings changed in the chat'
     - Field: migrate_to_chat_id
       Type: Integer
-      Description: Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+      Description: Optional. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
     - Field: migrate_from_chat_id
       Type: Integer
-      Description: Optional. The supergroup has been migrated from a group with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+      Description: Optional. The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
     - Field: pinned_message
       Type: Message
       Description: Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
@@ -454,9 +610,33 @@ children:
     - Field: passport_data
       Type: PassportData
       Description: Optional. Telegram Passport data
+    - Field: proximity_alert_triggered
+      Type: ProximityAlertTriggered
+      Description: Optional. Service message. A user in the chat triggered another user's proximity alert while sharing Live Location.
+    - Field: voice_chat_scheduled
+      Type: VoiceChatScheduled
+      Description: 'Optional. Service message: voice chat scheduled'
+    - Field: voice_chat_started
+      Type: VoiceChatStarted
+      Description: 'Optional. Service message: voice chat started'
+    - Field: voice_chat_ended
+      Type: VoiceChatEnded
+      Description: 'Optional. Service message: voice chat ended'
+    - Field: voice_chat_participants_invited
+      Type: VoiceChatParticipantsInvited
+      Description: 'Optional. Service message: new participants invited to a voice chat'
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
+  - name: MessageId
+    children: []
+    desc:
+    - name: p
+      content: This object represents a unique message identifier.
+    table:
+    - Field: message_id
+      Type: Integer
+      Description: Unique message identifier
   - name: MessageEntity
     children: []
     desc:
@@ -502,6 +682,39 @@ children:
     - Field: file_size
       Type: Integer
       Description: Optional. File size
+  - name: Animation
+    children: []
+    desc:
+    - name: p
+      content: This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).
+    table:
+    - Field: file_id
+      Type: String
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+    - Field: width
+      Type: Integer
+      Description: Video width as defined by sender
+    - Field: height
+      Type: Integer
+      Description: Video height as defined by sender
+    - Field: duration
+      Type: Integer
+      Description: Duration of the video in seconds as defined by sender
+    - Field: thumb
+      Type: PhotoSize
+      Description: Optional. Animation thumbnail as defined by sender
+    - Field: file_name
+      Type: String
+      Description: Optional. Original animation filename as defined by sender
+    - Field: mime_type
+      Type: String
+      Description: Optional. MIME type of the file as defined by sender
+    - Field: file_size
+      Type: Integer
+      Description: Optional. File size
   - name: Audio
     children: []
     desc:
@@ -523,6 +736,9 @@ children:
     - Field: title
       Type: String
       Description: Optional. Title of the audio as defined by sender or by audio tags
+    - Field: file_name
+      Type: String
+      Description: Optional. Original filename as defined by sender
     - Field: mime_type
       Type: String
       Description: Optional. MIME type of the file as defined by sender
@@ -580,63 +796,12 @@ children:
     - Field: thumb
       Type: PhotoSize
       Description: Optional. Video thumbnail
+    - Field: file_name
+      Type: String
+      Description: Optional. Original filename as defined by sender
     - Field: mime_type
       Type: String
       Description: Optional. Mime type of a file as defined by sender
-    - Field: file_size
-      Type: Integer
-      Description: Optional. File size
-  - name: Animation
-    children: []
-    desc:
-    - name: p
-      content: This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).
-    table:
-    - Field: file_id
-      Type: String
-      Description: Identifier for this file, which can be used to download or reuse the file
-    - Field: file_unique_id
-      Type: String
-      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
-    - Field: width
-      Type: Integer
-      Description: Video width as defined by sender
-    - Field: height
-      Type: Integer
-      Description: Video height as defined by sender
-    - Field: duration
-      Type: Integer
-      Description: Duration of the video in seconds as defined by sender
-    - Field: thumb
-      Type: PhotoSize
-      Description: Optional. Animation thumbnail as defined by sender
-    - Field: file_name
-      Type: String
-      Description: Optional. Original animation filename as defined by sender
-    - Field: mime_type
-      Type: String
-      Description: Optional. MIME type of the file as defined by sender
-    - Field: file_size
-      Type: Integer
-      Description: Optional. File size
-  - name: Voice
-    children: []
-    desc:
-    - name: p
-      content: This object represents a voice note.
-    table:
-    - Field: file_id
-      Type: String
-      Description: Identifier for this file, which can be used to download or reuse the file
-    - Field: file_unique_id
-      Type: String
-      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
-    - Field: duration
-      Type: Integer
-      Description: Duration of the audio in seconds as defined by sender
-    - Field: mime_type
-      Type: String
-      Description: Optional. MIME type of the file as defined by sender
     - Field: file_size
       Type: Integer
       Description: Optional. File size
@@ -664,6 +829,27 @@ children:
     - Field: file_size
       Type: Integer
       Description: Optional. File size
+  - name: Voice
+    children: []
+    desc:
+    - name: p
+      content: This object represents a voice note.
+    table:
+    - Field: file_id
+      Type: String
+      Description: Identifier for this file, which can be used to download or reuse the file
+    - Field: file_unique_id
+      Type: String
+      Description: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+    - Field: duration
+      Type: Integer
+      Description: Duration of the audio in seconds as defined by sender
+    - Field: mime_type
+      Type: String
+      Description: Optional. MIME type of the file as defined by sender
+    - Field: file_size
+      Type: Integer
+      Description: Optional. File size
   - name: Contact
     children: []
     desc:
@@ -681,43 +867,22 @@ children:
       Description: Optional. Contact's last name
     - Field: user_id
       Type: Integer
-      Description: Optional. Contact's user identifier in Telegram
+      Description: Optional. Contact's user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
     - Field: vcard
       Type: String
       Description: Optional. Additional data about the contact in the form of a vCard
-  - name: Location
+  - name: Dice
     children: []
     desc:
     - name: p
-      content: This object represents a point on the map.
+      content: This object represents an animated emoji that displays a random value.
     table:
-    - Field: longitude
-      Type: Float
-      Description: Longitude as defined by sender
-    - Field: latitude
-      Type: Float
-      Description: Latitude as defined by sender
-  - name: Venue
-    children: []
-    desc:
-    - name: p
-      content: This object represents a venue.
-    table:
-    - Field: location
-      Type: Location
-      Description: Venue location
-    - Field: title
+    - Field: emoji
       Type: String
-      Description: Name of the venue
-    - Field: address
-      Type: String
-      Description: Address of the venue
-    - Field: foursquare_id
-      Type: String
-      Description: Optional. Foursquare identifier of the venue
-    - Field: foursquare_type
-      Type: String
-      Description: Optional. Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+      Description: Emoji on which the dice throw animation is based
+    - Field: value
+      Type: Integer
+      Description: Value of the dice, 1-6 for “”, “” and “” base emoji, 1-5 for “” and “” base emoji, 1-64 for “” base emoji
   - name: PollOption
     children: []
     desc:
@@ -756,7 +921,7 @@ children:
       Description: Unique poll identifier
     - Field: question
       Type: String
-      Description: Poll question, 1-255 characters
+      Description: Poll question, 1-300 characters
     - Field: options
       Type: Array of PollOption
       Description: List of poll options
@@ -778,15 +943,125 @@ children:
     - Field: correct_option_id
       Type: Integer
       Description: Optional. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.
-  - name: Dice
+    - Field: explanation
+      Type: String
+      Description: Optional. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters
+    - Field: explanation_entities
+      Type: Array of MessageEntity
+      Description: Optional. Special entities like usernames, URLs, bot commands, etc. that appear in the explanation
+    - Field: open_period
+      Type: Integer
+      Description: Optional. Amount of time in seconds the poll will be active after creation
+    - Field: close_date
+      Type: Integer
+      Description: Optional. Point in time (Unix timestamp) when the poll will be automatically closed
+  - name: Location
     children: []
     desc:
     - name: p
-      content: This object represents a dice with random value from 1 to 6. (Yes, we're aware of the “proper” singular of die. But it's awkward, and we decided to help it change. One dice at a time!)
+      content: This object represents a point on the map.
     table:
-    - Field: value
+    - Field: longitude
+      Type: Float
+      Description: Longitude as defined by sender
+    - Field: latitude
+      Type: Float
+      Description: Latitude as defined by sender
+    - Field: horizontal_accuracy
+      Type: Float number
+      Description: Optional. The radius of uncertainty for the location, measured in meters; 0-1500
+    - Field: live_period
       Type: Integer
-      Description: Value of the dice, 1-6
+      Description: Optional. Time relative to the message sending date, during which the location can be updated, in seconds. For active live locations only.
+    - Field: heading
+      Type: Integer
+      Description: Optional. The direction in which user is moving, in degrees; 1-360. For active live locations only.
+    - Field: proximity_alert_radius
+      Type: Integer
+      Description: Optional. Maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.
+  - name: Venue
+    children: []
+    desc:
+    - name: p
+      content: This object represents a venue.
+    table:
+    - Field: location
+      Type: Location
+      Description: Venue location. Can't be a live location
+    - Field: title
+      Type: String
+      Description: Name of the venue
+    - Field: address
+      Type: String
+      Description: Address of the venue
+    - Field: foursquare_id
+      Type: String
+      Description: Optional. Foursquare identifier of the venue
+    - Field: foursquare_type
+      Type: String
+      Description: Optional. Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+    - Field: google_place_id
+      Type: String
+      Description: Optional. Google Places identifier of the venue
+    - Field: google_place_type
+      Type: String
+      Description: Optional. Google Places type of the venue. (See supported types.)
+  - name: ProximityAlertTriggered
+    children: []
+    desc:
+    - name: p
+      content: This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user.
+    table:
+    - Field: traveler
+      Type: User
+      Description: User that triggered the alert
+    - Field: watcher
+      Type: User
+      Description: User that set the alert
+    - Field: distance
+      Type: Integer
+      Description: The distance between the users
+  - name: MessageAutoDeleteTimerChanged
+    children: []
+    desc:
+    - name: p
+      content: This object represents a service message about a change in auto-delete timer settings.
+    table:
+    - Field: message_auto_delete_time
+      Type: Integer
+      Description: New auto-delete time for messages in the chat
+  - name: VoiceChatScheduled
+    children: []
+    desc:
+    - name: p
+      content: This object represents a service message about a voice chat scheduled in the chat.
+    table:
+    - Field: start_date
+      Type: Integer
+      Description: Point in time (Unix timestamp) when the voice chat is supposed to be started by a chat administrator
+  - name: VoiceChatStarted
+    children: []
+    desc:
+    - name: p
+      content: This object represents a service message about a voice chat started in the chat. Currently holds no information.
+  - name: VoiceChatEnded
+    children: []
+    desc:
+    - name: p
+      content: This object represents a service message about a voice chat ended in the chat.
+    table:
+    - Field: duration
+      Type: Integer
+      Description: Voice chat duration; in seconds
+  - name: VoiceChatParticipantsInvited
+    children: []
+    desc:
+    - name: p
+      content: This object represents a service message about new members invited to a voice chat.
+    table:
+    - Field: users
+      Type: Array of User
+      Description: Optional. New members that were invited to the voice chat
   - name: UserProfilePhotos
     children: []
     desc:
@@ -836,7 +1111,7 @@ children:
       Description: Optional. Requests clients to hide the keyboard as soon as it's been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat – the user can press a special button in the input field to see the custom keyboard again. Defaults to false.
     - Field: selective
       Type: Boolean
-      Description: 'Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot''s message is a reply (has reply_to_message_id), sender of the original message.Example: A user requests to change the bot‘s language, bot replies to the request with a keyboard to select the new language. Other users in the group don’t see the keyboard.'
+      Description: 'Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot''s message is a reply (has reply_to_message_id), sender of the original message.Example: A user requests to change the bot''s language, bot replies to the request with a keyboard to select the new language. Other users in the group don''t see the keyboard.'
   - name: KeyboardButton
     children: []
     desc:
@@ -909,10 +1184,10 @@ children:
       Description: Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
     - Field: switch_inline_query
       Type: String
-      Description: 'Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot‘s username and the specified inline query in the input field. Can be empty, in which case just the bot’s username will be inserted.Note: This offers an easy way for users to start using your bot in inline mode when they are currently in a private chat with it. Especially useful when combined with switch_pm… actions – in this case the user will be automatically returned to the chat they switched from, skipping the chat selection screen.'
+      Description: 'Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot''s username and the specified inline query in the input field. Can be empty, in which case just the bot''s username will be inserted.Note: This offers an easy way for users to start using your bot in inline mode when they are currently in a private chat with it. Especially useful when combined with switch_pm… actions – in this case the user will be automatically returned to the chat they switched from, skipping the chat selection screen.'
     - Field: switch_inline_query_current_chat
       Type: String
-      Description: Optional. If set, pressing the button will insert the bot‘s username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot’s username will be inserted.This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options.
+      Description: Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot's username will be inserted.This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options.
     - Field: callback_game
       Type: CallbackGame
       Description: 'Optional. Description of the game that will be launched when the user presses the button.NOTE: This type of button must always be the first button in the first row.'
@@ -974,19 +1249,19 @@ children:
     children: []
     desc:
     - name: p
-      content: Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
+      content: Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
     - name: blockquote
       content: |-
         Example: A poll bot for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:
 
         Explain the user how to send a command with parameters (e.g. /newpoll question answer1 answer2). May be appealing for hardcore users but lacks modern day polish.
-        Guide the user through a step-by-step process. ‘Please send me your question’, ‘Cool, now let’s add the first answer option‘, ’Great. Keep adding answer options, then send /done when you‘re ready’.
+        Guide the user through a step-by-step process. 'Please send me your question', 'Cool, now let's add the first answer option', 'Great. Keep adding answer options, then send /done when you're ready'.
 
-        The last option is definitely more attractive. And if you use ForceReply in your bot‘s questions, it will receive the user’s answers even if it only receives replies, commands and mentions — without any extra work for the user.
+        The last option is definitely more attractive. And if you use ForceReply in your bot's questions, it will receive the user's answers even if it only receives replies, commands and mentions — without any extra work for the user.
     table:
     - Field: force_reply
       Type: 'True'
-      Description: Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'
+      Description: Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'
     - Field: selective
       Type: Boolean
       Description: 'Optional. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot''s message is a reply (has reply_to_message_id), sender of the original message.'
@@ -1008,6 +1283,30 @@ children:
     - Field: big_file_unique_id
       Type: String
       Description: Unique file identifier of big (640x640) chat photo, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+  - name: ChatInviteLink
+    children: []
+    desc:
+    - name: p
+      content: Represents an invite link for a chat.
+    table:
+    - Field: invite_link
+      Type: String
+      Description: The invite link. If the link was created by another chat administrator, then the second part of the link will be replaced with “…”.
+    - Field: creator
+      Type: User
+      Description: Creator of the link
+    - Field: is_primary
+      Type: Boolean
+      Description: True, if the link is primary
+    - Field: is_revoked
+      Type: Boolean
+      Description: True, if the link is revoked
+    - Field: expire_date
+      Type: Integer
+      Description: Optional. Point in time (Unix timestamp) when the link will expire or has been expired
+    - Field: member_limit
+      Type: Integer
+      Description: Optional. Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
   - name: ChatMember
     children: []
     desc:
@@ -1023,12 +1322,15 @@ children:
     - Field: custom_title
       Type: String
       Description: Optional. Owner and administrators only. Custom title for this user
-    - Field: until_date
-      Type: Integer
-      Description: Optional. Restricted and kicked only. Date when restrictions will be lifted for this user; unix time
+    - Field: is_anonymous
+      Type: Boolean
+      Description: Optional. Owner and administrators only. True, if the user's presence in the chat is hidden
     - Field: can_be_edited
       Type: Boolean
       Description: Optional. Administrators only. True, if the bot is allowed to edit administrator privileges of that user
+    - Field: can_manage_chat
+      Type: Boolean
+      Description: Optional. Administrators only. True, if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege
     - Field: can_post_messages
       Type: Boolean
       Description: Optional. Administrators only. True, if the administrator can post in the channel; channels only
@@ -1038,12 +1340,15 @@ children:
     - Field: can_delete_messages
       Type: Boolean
       Description: Optional. Administrators only. True, if the administrator can delete messages of other users
+    - Field: can_manage_voice_chats
+      Type: Boolean
+      Description: Optional. Administrators only. True, if the administrator can manage voice chats
     - Field: can_restrict_members
       Type: Boolean
       Description: Optional. Administrators only. True, if the administrator can restrict, ban or unban chat members
     - Field: can_promote_members
       Type: Boolean
-      Description: Optional. Administrators only. True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by the user)
+      Description: Optional. Administrators only. True, if the administrator can add new administrators with a subset of their own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by the user)
     - Field: can_change_info
       Type: Boolean
       Description: Optional. Administrators and restricted only. True, if the user is allowed to change the chat title, photo and other settings
@@ -1071,6 +1376,33 @@ children:
     - Field: can_add_web_page_previews
       Type: Boolean
       Description: Optional. Restricted only. True, if the user is allowed to add web page previews to their messages
+    - Field: until_date
+      Type: Integer
+      Description: Optional. Restricted and kicked only. Date when restrictions will be lifted for this user; unix time
+  - name: ChatMemberUpdated
+    children: []
+    desc:
+    - name: p
+      content: This object represents changes in the status of a chat member.
+    table:
+    - Field: chat
+      Type: Chat
+      Description: Chat the user belongs to
+    - Field: from
+      Type: User
+      Description: Performer of the action, which resulted in the change
+    - Field: date
+      Type: Integer
+      Description: Date the change was done in Unix time
+    - Field: old_chat_member
+      Type: ChatMember
+      Description: Previous information about the chat member
+    - Field: new_chat_member
+      Type: ChatMember
+      Description: New information about the chat member
+    - Field: invite_link
+      Type: ChatInviteLink
+      Description: Optional. Chat invite link, which was used by the user to join the chat; for joining by invite link events only.
   - name: ChatPermissions
     children: []
     desc:
@@ -1101,6 +1433,18 @@ children:
     - Field: can_pin_messages
       Type: Boolean
       Description: Optional. True, if the user is allowed to pin messages. Ignored in public supergroups
+  - name: ChatLocation
+    children: []
+    desc:
+    - name: p
+      content: Represents a location to which a chat is connected.
+    table:
+    - Field: location
+      Type: Location
+      Description: The location to which the supergroup is connected. Can't be a live location.
+    - Field: address
+      Type: String
+      Description: Location address; 1-64 characters, as defined by the chat owner
   - name: BotCommand
     children: []
     desc:
@@ -1121,7 +1465,7 @@ children:
     table:
     - Field: migrate_to_chat_id
       Type: Integer
-      Description: Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+      Description: Optional. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
     - Field: retry_after
       Type: Integer
       Description: Optional. In case of exceeding flood control, the number of seconds left to wait before the request can be repeated
@@ -1154,7 +1498,10 @@ children:
       Description: Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the photo caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
   - name: InputMediaVideo
     children: []
     desc:
@@ -1169,13 +1516,16 @@ children:
       Description: File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More info on Sending Files »
     - Field: thumb
       Type: InputFile or String
-      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
       Description: Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the video caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: width
       Type: Integer
       Description: Optional. Video width
@@ -1202,13 +1552,16 @@ children:
       Description: File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More info on Sending Files »
     - Field: thumb
       Type: InputFile or String
-      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
       Description: Optional. Caption of the animation to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the animation caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: width
       Type: Integer
       Description: Optional. Animation width
@@ -1232,13 +1585,16 @@ children:
       Description: File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More info on Sending Files »
     - Field: thumb
       Type: InputFile or String
-      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
       Description: Optional. Caption of the audio to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the audio caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: duration
       Type: Integer
       Description: Optional. Duration of the audio in seconds
@@ -1262,13 +1618,19 @@ children:
       Description: File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More info on Sending Files »
     - Field: thumb
       Type: InputFile or String
-      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Field: caption
       Type: String
       Description: Optional. Caption of the document to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the document caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
+    - Field: disable_content_type_detection
+      Type: Boolean
+      Description: Optional. Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always true, if the document is sent as part of an album.
   - name: InputFile
     children: []
     desc:
@@ -1299,7 +1661,7 @@ children:
       content:
       - When sending by URL the target file must have the correct MIME type (e.g., audio/mpeg for sendAudio, etc.).
       - In sendDocument, sending by URL will currently only work for gif, pdf and zip files.
-      - To use sendVoice, the file must have the type audio/ogg and be no more than 1MB in size. 1–20MB voice notes will be sent as files.
+      - To use sendVoice, the file must have the type audio/ogg and be no more than 1MB in size. 1-20MB voice notes will be sent as files.
       - Other configurations may work but we can't guarantee that they will.
   - name: Inline mode objects
     children: []
@@ -1320,6 +1682,16 @@ children:
     desc:
     - name: p
       content: A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the bot in form of a User object.
+  - name: logOut
+    children: []
+    desc:
+    - name: p
+      content: Use this method to log out from the cloud Bot API server before launching the bot locally. You must log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns True on success. Requires no parameters.
+  - name: close
+    children: []
+    desc:
+    - name: p
+      content: Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn't launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns True on success. Requires no parameters.
   - name: sendMessage
     children: []
     desc:
@@ -1337,7 +1709,11 @@ children:
     - Parameter: parse_mode
       Type: String
       Required: Optional
-      Description: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+      Description: Mode for parsing entities in the message text. See formatting options for more details.
+    - Parameter: entities
+      Type: Array of MessageEntity
+      Required: Optional
+      Description: List of special entities that appear in message text, which can be specified instead of parse_mode
     - Parameter: disable_web_page_preview
       Type: Boolean
       Required: Optional
@@ -1350,6 +1726,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -1360,7 +1740,7 @@ children:
     - name: p
       content: The Bot API supports basic formatting for messages. You can use bold, italic, underlined and strikethrough text, as well as inline links and pre-formatted code in your bots' messages. Telegram clients will render them accordingly. You can use either markdown-style or HTML-style formatting.
     - name: p
-      content: Note that Telegram clients will display an alert to the user before opening an inline link (‘Open this link?’ together with the full URL).
+      content: Note that Telegram clients will display an alert to the user before opening an inline link ('Open this link?' together with the full URL).
     - name: p
       content: Message entities can be nested, providing following restrictions are met:- If two entities has common characters then one of them is fully contained inside another.- bold, italic, underline and strikethrough entities can contain and to be contained in any other entities, except pre and code.- All other entities can't contain each other.
     - name: p
@@ -1393,10 +1773,10 @@ children:
       content: 'Please note:'
     - name: ul
       content:
-      - Any character between 1 and 126 inclusively can be escaped anywhere with a preceding '\' character, in which case it is treated as an ordinary character and not a part of the markup.
-      - Inside pre and code entities, all '`‘ and ’\‘ characters must be escaped with a preceding ’\' character.
-      - Inside (...) part of inline link definition, all ')‘ and ’\‘ must be escaped with a preceding ’\' character.
-      - In all other places characters '_‘, ’*‘, ’[‘, ’]‘, ’(‘, ’)‘, ’~‘, ’`‘, ’>‘, ’#‘, ’+‘, ’-‘, ’=‘, ’|‘, ’{‘, ’}‘, ’.‘, ’!‘ must be escaped with the preceding character ’\'.
+      - Any character with code between 1 and 126 inclusively can be escaped anywhere with a preceding '\' character, in which case it is treated as an ordinary character and not a part of the markup.
+      - Inside pre and code entities, all '`' and '\' characters must be escaped with a preceding '\' character.
+      - Inside (...) part of inline link definition, all ')' and '\' must be escaped with a preceding '\' character.
+      - In all other places characters '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!' must be escaped with the preceding character '\'.
       - In case of ambiguity between italic and underline entities __ is always greadily treated from left to right as beginning or end of underline entity, so instead of ___italic underline___ use ___italic underline_\r__, where \r is a character with code 13, which will be ignored.
     - name: h6
       content: HTML style
@@ -1447,13 +1827,13 @@ children:
       content:
       - Entities must not be nested, use parse mode MarkdownV2 instead.
       - There is no way to specify underline and strikethrough entities, use parse mode MarkdownV2 instead.
-      - To escape characters '_‘, ’*‘, ’`‘, ’[‘ outside of an entity, prepend the characters ’\' before them.
+      - To escape characters '_', '*', '`', '[' outside of an entity, prepend the characters '\' before them.
       - 'Escaping inside entities is not allowed, so entity must be closed first and reopened again: use _snake_\__case_ for italic snake_case and *2*\**2=4* for bold 2*2=4.'
   - name: forwardMessage
     children: []
     desc:
     - name: p
-      content: Use this method to forward messages of any kind. On success, the sent Message is returned.
+      content: Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent Message is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -1471,6 +1851,52 @@ children:
       Type: Integer
       Required: 'Yes'
       Description: Message identifier in the chat specified in from_chat_id
+  - name: copyMessage
+    children: []
+    desc:
+    - name: p
+      content: Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+    table:
+    - Parameter: chat_id
+      Type: Integer or String
+      Required: 'Yes'
+      Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    - Parameter: from_chat_id
+      Type: Integer or String
+      Required: 'Yes'
+      Description: Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+    - Parameter: message_id
+      Type: Integer
+      Required: 'Yes'
+      Description: Message identifier in the chat specified in from_chat_id
+    - Parameter: caption
+      Type: String
+      Required: Optional
+      Description: New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept
+    - Parameter: parse_mode
+      Type: String
+      Required: Optional
+      Description: Mode for parsing entities in the new caption. See formatting options for more details.
+    - Parameter: caption_entities
+      Type: Array of MessageEntity
+      Required: Optional
+      Description: List of special entities that appear in the new caption, which can be specified instead of parse_mode
+    - Parameter: disable_notification
+      Type: Boolean
+      Required: Optional
+      Description: Sends the message silently. Users will receive a notification with no sound.
+    - Parameter: reply_to_message_id
+      Type: Integer
+      Required: Optional
+      Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
+    - Parameter: reply_markup
+      Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
+      Required: Optional
+      Description: Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
   - name: sendPhoto
     children: []
     desc:
@@ -1484,7 +1910,7 @@ children:
     - Parameter: photo
       Type: InputFile or String
       Required: 'Yes'
-      Description: Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. More info on Sending Files »
+      Description: Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20. More info on Sending Files »
     - Parameter: caption
       Type: String
       Required: Optional
@@ -1492,7 +1918,11 @@ children:
     - Parameter: parse_mode
       Type: String
       Required: Optional
-      Description: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Mode for parsing entities in the photo caption. See formatting options for more details.
+    - Parameter: caption_entities
+      Type: Array of MessageEntity
+      Required: Optional
+      Description: List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -1501,6 +1931,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -1528,7 +1962,11 @@ children:
     - Parameter: parse_mode
       Type: String
       Required: Optional
-      Description: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Mode for parsing entities in the audio caption. See formatting options for more details.
+    - Parameter: caption_entities
+      Type: Array of MessageEntity
+      Required: Optional
+      Description: List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Parameter: duration
       Type: Integer
       Required: Optional
@@ -1544,7 +1982,7 @@ children:
     - Parameter: thumb
       Type: InputFile or String
       Required: Optional
-      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -1553,6 +1991,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -1574,7 +2016,7 @@ children:
     - Parameter: thumb
       Type: InputFile or String
       Required: Optional
-      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Parameter: caption
       Type: String
       Required: Optional
@@ -1582,7 +2024,15 @@ children:
     - Parameter: parse_mode
       Type: String
       Required: Optional
-      Description: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Mode for parsing entities in the document caption. See formatting options for more details.
+    - Parameter: caption_entities
+      Type: Array of MessageEntity
+      Required: Optional
+      Description: List of special entities that appear in the caption, which can be specified instead of parse_mode
+    - Parameter: disable_content_type_detection
+      Type: Boolean
+      Required: Optional
+      Description: Disables automatic server-side content type detection for files uploaded using multipart/form-data
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -1591,6 +2041,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -1624,7 +2078,7 @@ children:
     - Parameter: thumb
       Type: InputFile or String
       Required: Optional
-      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Parameter: caption
       Type: String
       Required: Optional
@@ -1632,7 +2086,11 @@ children:
     - Parameter: parse_mode
       Type: String
       Required: Optional
-      Description: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Mode for parsing entities in the video caption. See formatting options for more details.
+    - Parameter: caption_entities
+      Type: Array of MessageEntity
+      Required: Optional
+      Description: List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Parameter: supports_streaming
       Type: Boolean
       Required: Optional
@@ -1645,6 +2103,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -1678,7 +2140,7 @@ children:
     - Parameter: thumb
       Type: InputFile or String
       Required: Optional
-      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Parameter: caption
       Type: String
       Required: Optional
@@ -1686,7 +2148,11 @@ children:
     - Parameter: parse_mode
       Type: String
       Required: Optional
-      Description: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Mode for parsing entities in the animation caption. See formatting options for more details.
+    - Parameter: caption_entities
+      Type: Array of MessageEntity
+      Required: Optional
+      Description: List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -1695,6 +2161,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -1720,7 +2190,11 @@ children:
     - Parameter: parse_mode
       Type: String
       Required: Optional
-      Description: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Mode for parsing entities in the voice message caption. See formatting options for more details.
+    - Parameter: caption_entities
+      Type: Array of MessageEntity
+      Required: Optional
+      Description: List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Parameter: duration
       Type: Integer
       Required: Optional
@@ -1733,6 +2207,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -1762,7 +2240,7 @@ children:
     - Parameter: thumb
       Type: InputFile or String
       Required: Optional
-      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
+      Description: Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -1771,6 +2249,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -1779,24 +2261,28 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to send a group of photos or videos as an album. On success, an array of the sent Messages is returned.
+      content: Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
       Required: 'Yes'
       Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     - Parameter: media
-      Type: Array of InputMediaPhoto and InputMediaVideo
+      Type: Array of InputMediaAudio, InputMediaDocument, InputMediaPhoto and InputMediaVideo
       Required: 'Yes'
-      Description: A JSON-serialized array describing photos and videos to be sent, must include 2–10 items
+      Description: A JSON-serialized array describing messages to be sent, must include 2-10 items
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
-      Description: Sends the messages silently. Users will receive a notification with no sound.
+      Description: Sends messages silently. Users will receive a notification with no sound.
     - Parameter: reply_to_message_id
       Type: Integer
       Required: Optional
       Description: If the messages are a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
   - name: sendLocation
     children: []
     desc:
@@ -1815,10 +2301,22 @@ children:
       Type: Float number
       Required: 'Yes'
       Description: Longitude of the location
+    - Parameter: horizontal_accuracy
+      Type: Float number
+      Required: Optional
+      Description: The radius of uncertainty for the location, measured in meters; 0-1500
     - Parameter: live_period
       Type: Integer
       Required: Optional
       Description: Period in seconds for which the location will be updated (see Live Locations, should be between 60 and 86400.
+    - Parameter: heading
+      Type: Integer
+      Required: Optional
+      Description: For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
+    - Parameter: proximity_alert_radius
+      Type: Integer
+      Required: Optional
+      Description: For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -1827,6 +2325,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -1835,7 +2337,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
+      content: Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -1857,6 +2359,18 @@ children:
       Type: Float number
       Required: 'Yes'
       Description: Longitude of new location
+    - Parameter: horizontal_accuracy
+      Type: Float number
+      Required: Optional
+      Description: The radius of uncertainty for the location, measured in meters; 0-1500
+    - Parameter: heading
+      Type: Integer
+      Required: Optional
+      Description: Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
+    - Parameter: proximity_alert_radius
+      Type: Integer
+      Required: Optional
+      Description: Maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup
       Required: Optional
@@ -1917,6 +2431,14 @@ children:
       Type: String
       Required: Optional
       Description: Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+    - Parameter: google_place_id
+      Type: String
+      Required: Optional
+      Description: Google Places identifier of the venue
+    - Parameter: google_place_type
+      Type: String
+      Required: Optional
+      Description: Google Places type of the venue. (See supported types.)
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -1925,6 +2447,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -1963,6 +2489,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -1980,7 +2510,7 @@ children:
     - Parameter: question
       Type: String
       Required: 'Yes'
-      Description: Poll question, 1-255 characters
+      Description: Poll question, 1-300 characters
     - Parameter: options
       Type: Array of String
       Required: 'Yes'
@@ -2001,6 +2531,26 @@ children:
       Type: Integer
       Required: Optional
       Description: 0-based identifier of the correct answer option, required for polls in quiz mode
+    - Parameter: explanation
+      Type: String
+      Required: Optional
+      Description: Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
+    - Parameter: explanation_parse_mode
+      Type: String
+      Required: Optional
+      Description: Mode for parsing entities in the explanation. See formatting options for more details.
+    - Parameter: explanation_entities
+      Type: Array of MessageEntity
+      Required: Optional
+      Description: List of special entities that appear in the poll explanation, which can be specified instead of parse_mode
+    - Parameter: open_period
+      Type: Integer
+      Required: Optional
+      Description: Amount of time in seconds the poll will be active after creation, 5-600. Can't be used together with close_date.
+    - Parameter: close_date
+      Type: Integer
+      Required: Optional
+      Description: Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.
     - Parameter: is_closed
       Type: Boolean
       Required: Optional
@@ -2013,6 +2563,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -2021,12 +2575,16 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to send a dice, which will have a random value from 1 to 6. On success, the sent Message is returned. (Yes, we're aware of the “proper” singular of die. But it's awkward, and we decided to help it change. One dice at a time!)
+      content: Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
       Required: 'Yes'
       Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    - Parameter: emoji
+      Type: String
+      Required: Optional
+      Description: Emoji on which the dice throw animation is based. Currently, must be one of “”, “”, “”, “”, “”, or “”. Dice can have values 1-6 for “”, “” and “”, values 1-5 for “” and “”, and values 1-64 for “”. Defaults to “”
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
@@ -2035,6 +2593,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -2056,7 +2618,7 @@ children:
     - Parameter: action
       Type: String
       Required: 'Yes'
-      Description: 'Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.'
+      Description: 'Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.'
   - name: getUserProfilePhotos
     children: []
     desc:
@@ -2074,7 +2636,7 @@ children:
     - Parameter: limit
       Type: Integer
       Required: Optional
-      Description: Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.
+      Description: Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.
   - name: getFile
     children: []
     desc:
@@ -2091,7 +2653,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+      content: Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2104,12 +2666,16 @@ children:
     - Parameter: until_date
       Type: Integer
       Required: Optional
-      Description: Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever
+      Description: Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied for supergroups and channels only.
+    - Parameter: revoke_messages
+      Type: Boolean
+      Required: Optional
+      Description: Pass True to delete all messages from the chat for the user that is being removed. If False, the user will be able to see messages in the group that were sent before the user was removed. Always True for supergroups and channels.
   - name: unbanChatMember
     children: []
     desc:
     - name: p
-      content: Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. Returns True on success.
+      content: Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be removed from the chat. If you don't want this, use the parameter only_if_banned. Returns True on success.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2119,6 +2685,10 @@ children:
       Type: Integer
       Required: 'Yes'
       Description: Unique identifier of the target user
+    - Parameter: only_if_banned
+      Type: Boolean
+      Required: Optional
+      Description: Do nothing if the user is not banned
   - name: restrictChatMember
     children: []
     desc:
@@ -2136,7 +2706,7 @@ children:
     - Parameter: permissions
       Type: ChatPermissions
       Required: 'Yes'
-      Description: New user permissions
+      Description: A JSON-serialized object for new user permissions
     - Parameter: until_date
       Type: Integer
       Required: Optional
@@ -2155,10 +2725,14 @@ children:
       Type: Integer
       Required: 'Yes'
       Description: Unique identifier of the target user
-    - Parameter: can_change_info
+    - Parameter: is_anonymous
       Type: Boolean
       Required: Optional
-      Description: Pass True, if the administrator can change chat title, photo and other settings
+      Description: Pass True, if the administrator's presence in the chat is hidden
+    - Parameter: can_manage_chat
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege
     - Parameter: can_post_messages
       Type: Boolean
       Required: Optional
@@ -2171,22 +2745,30 @@ children:
       Type: Boolean
       Required: Optional
       Description: Pass True, if the administrator can delete messages of other users
-    - Parameter: can_invite_users
+    - Parameter: can_manage_voice_chats
       Type: Boolean
       Required: Optional
-      Description: Pass True, if the administrator can invite new users to the chat
+      Description: Pass True, if the administrator can manage voice chats
     - Parameter: can_restrict_members
       Type: Boolean
       Required: Optional
       Description: Pass True, if the administrator can restrict, ban or unban chat members
+    - Parameter: can_promote_members
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the administrator can add new administrators with a subset of their own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)
+    - Parameter: can_change_info
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the administrator can change chat title, photo and other settings
+    - Parameter: can_invite_users
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the administrator can invite new users to the chat
     - Parameter: can_pin_messages
       Type: Boolean
       Required: Optional
       Description: Pass True, if the administrator can pin messages, supergroups only
-    - Parameter: can_promote_members
-      Type: Boolean
-      Required: Optional
-      Description: Pass True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)
   - name: setChatAdministratorCustomTitle
     children: []
     desc:
@@ -2223,14 +2805,68 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to generate a new invite link for a chat; any previously generated link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the new invite link as String on success.
+      content: Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the new invite link as String on success.
     - name: blockquote
-      content: 'Note: Each administrator in a chat generates their own invite links. Bots can''t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using exportChatInviteLink – after this the link will become available to the bot via the getChat method. If your bot needs to generate a new invite link replacing its previous one, use exportChatInviteLink again.'
+      content: 'Note: Each administrator in a chat generates their own invite links. Bots can''t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using exportChatInviteLink or by calling the getChat method. If your bot needs to generate a new primary invite link replacing its previous one, use exportChatInviteLink again.'
     table:
     - Parameter: chat_id
       Type: Integer or String
       Required: 'Yes'
       Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+  - name: createChatInviteLink
+    children: []
+    desc:
+    - name: p
+      content: Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.
+    table:
+    - Parameter: chat_id
+      Type: Integer or String
+      Required: 'Yes'
+      Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    - Parameter: expire_date
+      Type: Integer
+      Required: Optional
+      Description: Point in time (Unix timestamp) when the link will expire
+    - Parameter: member_limit
+      Type: Integer
+      Required: Optional
+      Description: Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
+  - name: editChatInviteLink
+    children: []
+    desc:
+    - name: p
+      content: Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the edited invite link as a ChatInviteLink object.
+    table:
+    - Parameter: chat_id
+      Type: Integer or String
+      Required: 'Yes'
+      Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    - Parameter: invite_link
+      Type: String
+      Required: 'Yes'
+      Description: The invite link to edit
+    - Parameter: expire_date
+      Type: Integer
+      Required: Optional
+      Description: Point in time (Unix timestamp) when the link will expire
+    - Parameter: member_limit
+      Type: Integer
+      Required: Optional
+      Description: Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
+  - name: revokeChatInviteLink
+    children: []
+    desc:
+    - name: p
+      content: Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the revoked invite link as ChatInviteLink object.
+    table:
+    - Parameter: chat_id
+      Type: Integer or String
+      Required: 'Yes'
+      Description: Unique identifier of the target chat or username of the target channel (in the format @channelusername)
+    - Parameter: invite_link
+      Type: String
+      Required: 'Yes'
+      Description: The invite link to revoke
   - name: setChatPhoto
     children: []
     desc:
@@ -2287,7 +2923,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to pin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
+      content: Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2300,12 +2936,26 @@ children:
     - Parameter: disable_notification
       Type: Boolean
       Required: Optional
-      Description: Pass True, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels.
+      Description: Pass True, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
   - name: unpinChatMessage
     children: []
     desc:
     - name: p
-      content: Use this method to unpin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
+      content: Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.
+    table:
+    - Parameter: chat_id
+      Type: Integer or String
+      Required: 'Yes'
+      Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+    - Parameter: message_id
+      Type: Integer
+      Required: Optional
+      Description: Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
+  - name: unpinAllChatMessages
+    children: []
+    desc:
+    - name: p
+      content: Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2412,7 +3062,7 @@ children:
     - Parameter: url
       Type: String
       Required: Optional
-      Description: URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather, specify the URL that opens your game – note that this will only work if the query comes from a callback_game button.Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
+      Description: URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather, specify the URL that opens your game — note that this will only work if the query comes from a callback_game button.Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
     - Parameter: cache_time
       Type: Integer
       Required: Optional
@@ -2446,7 +3096,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to edit text and game messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+      content: Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2467,7 +3117,11 @@ children:
     - Parameter: parse_mode
       Type: String
       Required: Optional
-      Description: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+      Description: Mode for parsing entities in the message text. See formatting options for more details.
+    - Parameter: entities
+      Type: Array of MessageEntity
+      Required: Optional
+      Description: List of special entities that appear in message text, which can be specified instead of parse_mode
     - Parameter: disable_web_page_preview
       Type: Boolean
       Required: Optional
@@ -2480,7 +3134,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to edit captions of messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+      content: Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2501,7 +3155,11 @@ children:
     - Parameter: parse_mode
       Type: String
       Required: Optional
-      Description: Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Mode for parsing entities in the message caption. See formatting options for more details.
+    - Parameter: caption_entities
+      Type: Array of MessageEntity
+      Required: Optional
+      Description: List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup
       Required: Optional
@@ -2510,7 +3168,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to edit animation, audio, document, photo, or video messages. If a message is a part of a message album, then it can be edited only to a photo or a video. Otherwise, message type can be changed arbitrarily. When inline message is edited, new file can't be uploaded. Use previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
+      content: Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded. Use a previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2536,7 +3194,7 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to edit only the reply markup of messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+      content: Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
     table:
     - Parameter: chat_id
       Type: Integer or String
@@ -2693,6 +3351,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply
       Required: Optional
@@ -2720,7 +3382,7 @@ children:
     - Parameter: png_sticker
       Type: InputFile
       Required: 'Yes'
-      Description: Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More info on Sending Files »
+      Description: PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More info on Sending Files »
   - name: createNewStickerSet
     children: []
     desc:
@@ -2775,7 +3437,7 @@ children:
       Description: Sticker set name
     - Parameter: png_sticker
       Type: InputFile or String
-      Required: 'Yes'
+      Required: Optional
       Description: PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
     - Parameter: tgs_sticker
       Type: InputFile
@@ -2848,15 +3510,18 @@ children:
     - Field: from
       Type: User
       Description: Sender
-    - Field: location
-      Type: Location
-      Description: Optional. Sender location, only for bots that request user location
     - Field: query
       Type: String
       Description: Text of the query (up to 256 characters)
     - Field: offset
       Type: String
       Description: Offset of the results to be returned, can be controlled by the bot
+    - Field: chat_type
+      Type: String
+      Description: Optional. Type of the chat, from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat
+    - Field: location
+      Type: Location
+      Description: Optional. Sender location, only for bots that request user location
   - name: answerInlineQuery
     children: []
     desc:
@@ -2882,7 +3547,7 @@ children:
     - Parameter: next_offset
       Type: String
       Required: Optional
-      Description: Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don‘t support pagination. Offset length can’t exceed 64 bytes.
+      Description: Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don't support pagination. Offset length can't exceed 64 bytes.
     - Parameter: switch_pm_text
       Type: String
       Required: Optional
@@ -2890,7 +3555,7 @@ children:
     - Parameter: switch_pm_parameter
       Type: String
       Required: Optional
-      Description: 'Deep-linking parameter for the /start message sent to the bot when user presses the switch button. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed.Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a ‘Connect your YouTube account’ button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot''s inline capabilities.'
+      Description: 'Deep-linking parameter for the /start message sent to the bot when user presses the switch button. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed.Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a ''Connect your YouTube account'' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot''s inline capabilities.'
   - name: InlineQueryResult
     children: []
     desc:
@@ -2918,6 +3583,8 @@ children:
       - InlineQueryResultVenue
       - InlineQueryResultVideo
       - InlineQueryResultVoice
+    - name: p
+      content: 'Note: All URLs passed in inline query results will be available to end users and therefore must be assumed to be public.'
   - name: InlineQueryResultArticle
     children: []
     desc:
@@ -2992,7 +3659,10 @@ children:
       Description: Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the photo caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3025,7 +3695,10 @@ children:
       Description: Optional. Duration of the GIF
     - Field: thumb_url
       Type: String
-      Description: URL of the static thumbnail for the result (jpeg or gif)
+      Description: URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
+    - Field: thumb_mime_type
+      Type: String
+      Description: Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
     - Field: title
       Type: String
       Description: Optional. Title for the result
@@ -3034,7 +3707,10 @@ children:
       Description: Optional. Caption of the GIF file to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3067,7 +3743,10 @@ children:
       Description: Optional. Video duration
     - Field: thumb_url
       Type: String
-      Description: URL of the static thumbnail (jpeg or gif) for the result
+      Description: URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
+    - Field: thumb_mime_type
+      Type: String
+      Description: Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
     - Field: title
       Type: String
       Description: Optional. Title for the result
@@ -3076,7 +3755,10 @@ children:
       Description: Optional. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3114,7 +3796,10 @@ children:
       Description: Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the video caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: video_width
       Type: Integer
       Description: Optional. Video width
@@ -3158,7 +3843,10 @@ children:
       Description: Optional. Caption, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the audio caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: performer
       Type: String
       Description: Optional. Performer
@@ -3196,7 +3884,10 @@ children:
       Description: Optional. Caption, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the voice message caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: voice_duration
       Type: Integer
       Description: Optional. Recording duration in seconds
@@ -3228,7 +3919,10 @@ children:
       Description: Optional. Caption of the document to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the document caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: document_url
       Type: String
       Description: A valid URL for the file
@@ -3276,9 +3970,18 @@ children:
     - Field: title
       Type: String
       Description: Location title
+    - Field: horizontal_accuracy
+      Type: Float number
+      Description: Optional. The radius of uncertainty for the location, measured in meters; 0-1500
     - Field: live_period
       Type: Integer
       Description: Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
+    - Field: heading
+      Type: Integer
+      Description: Optional. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
+    - Field: proximity_alert_radius
+      Type: Integer
+      Description: Optional. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3326,6 +4029,12 @@ children:
     - Field: foursquare_type
       Type: String
       Description: Optional. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+    - Field: google_place_id
+      Type: String
+      Description: Optional. Google Places identifier of the venue
+    - Field: google_place_type
+      Type: String
+      Description: Optional. Google Places type of the venue. (See supported types.)
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3428,7 +4137,10 @@ children:
       Description: Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the photo caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3458,7 +4170,10 @@ children:
       Description: Optional. Caption of the GIF file to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3488,7 +4203,10 @@ children:
       Description: Optional. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3546,7 +4264,10 @@ children:
       Description: Optional. Caption of the document to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the document caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3579,7 +4300,10 @@ children:
       Description: Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the video caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3611,7 +4335,10 @@ children:
       Description: Optional. Caption, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the voice message caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3640,7 +4367,10 @@ children:
       Description: Optional. Caption, 0-1024 characters after entities parsing
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+      Description: Optional. Mode for parsing entities in the audio caption. See formatting options for more details.
+    - Field: caption_entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
     - Field: reply_markup
       Type: InlineKeyboardMarkup
       Description: Optional. Inline keyboard attached to the message
@@ -3651,13 +4381,14 @@ children:
     children: []
     desc:
     - name: p
-      content: 'This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 4 types:'
+      content: 'This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:'
     - name: ul
       content:
       - InputTextMessageContent
       - InputLocationMessageContent
       - InputVenueMessageContent
       - InputContactMessageContent
+      - InputInvoiceMessageContent
   - name: InputTextMessageContent
     children: []
     desc:
@@ -3669,7 +4400,10 @@ children:
       Description: Text of the message to be sent, 1-4096 characters
     - Field: parse_mode
       Type: String
-      Description: Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+      Description: Optional. Mode for parsing entities in the message text. See formatting options for more details.
+    - Field: entities
+      Type: Array of MessageEntity
+      Description: Optional. List of special entities that appear in message text, which can be specified instead of parse_mode
     - Field: disable_web_page_preview
       Type: Boolean
       Description: Optional. Disables link previews for links in the sent message
@@ -3685,9 +4419,18 @@ children:
     - Field: longitude
       Type: Float
       Description: Longitude of the location in degrees
+    - Field: horizontal_accuracy
+      Type: Float number
+      Description: Optional. The radius of uncertainty for the location, measured in meters; 0-1500
     - Field: live_period
       Type: Integer
       Description: Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
+    - Field: heading
+      Type: Integer
+      Description: Optional. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
+    - Field: proximity_alert_radius
+      Type: Integer
+      Description: Optional. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
   - name: InputVenueMessageContent
     children: []
     desc:
@@ -3712,6 +4455,12 @@ children:
     - Field: foursquare_type
       Type: String
       Description: Optional. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+    - Field: google_place_id
+      Type: String
+      Description: Optional. Google Places identifier of the venue
+    - Field: google_place_type
+      Type: String
+      Description: Optional. Google Places type of the venue. (See supported types.)
   - name: InputContactMessageContent
     children: []
     desc:
@@ -3730,6 +4479,72 @@ children:
     - Field: vcard
       Type: String
       Description: Optional. Additional data about the contact in the form of a vCard, 0-2048 bytes
+  - name: InputInvoiceMessageContent
+    children: []
+    desc:
+    - name: p
+      content: Represents the content of an invoice message to be sent as the result of an inline query.
+    table:
+    - Field: title
+      Type: String
+      Description: Product name, 1-32 characters
+    - Field: description
+      Type: String
+      Description: Product description, 1-255 characters
+    - Field: payload
+      Type: String
+      Description: Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
+    - Field: provider_token
+      Type: String
+      Description: Payment provider token, obtained via Botfather
+    - Field: currency
+      Type: String
+      Description: Three-letter ISO 4217 currency code, see more on currencies
+    - Field: prices
+      Type: Array of LabeledPrice
+      Description: Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
+    - Field: max_tip_amount
+      Type: Integer
+      Description: Optional. The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0
+    - Field: suggested_tip_amounts
+      Type: Array of Integer
+      Description: Optional. A JSON-serialized array of suggested amounts of tip in the smallest units of the currency (integer, not float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed max_tip_amount.
+    - Field: provider_data
+      Type: String
+      Description: Optional. A JSON-serialized object for data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider.
+    - Field: photo_url
+      Type: String
+      Description: Optional. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. People like it better when they see what they are paying for.
+    - Field: photo_size
+      Type: Integer
+      Description: Optional. Photo size
+    - Field: photo_width
+      Type: Integer
+      Description: Optional. Photo width
+    - Field: photo_height
+      Type: Integer
+      Description: Optional. Photo height
+    - Field: need_name
+      Type: Boolean
+      Description: Optional. Pass True, if you require the user's full name to complete the order
+    - Field: need_phone_number
+      Type: Boolean
+      Description: Optional. Pass True, if you require the user's phone number to complete the order
+    - Field: need_email
+      Type: Boolean
+      Description: Optional. Pass True, if you require the user's email address to complete the order
+    - Field: need_shipping_address
+      Type: Boolean
+      Description: Optional. Pass True, if you require the user's shipping address to complete the order
+    - Field: send_phone_number_to_provider
+      Type: Boolean
+      Description: Optional. Pass True, if user's phone number should be sent to provider
+    - Field: send_email_to_provider
+      Type: Boolean
+      Description: Optional. Pass True, if user's email address should be sent to provider
+    - Field: is_flexible
+      Type: Boolean
+      Description: Optional. Pass True, if the final price depends on the shipping method
   - name: ChosenInlineResult
     children: []
     desc:
@@ -3757,7 +4572,7 @@ children:
   - name: p
     content: The following methods and objects allow your bot to work in inline mode.Please see our Introduction to Inline bots for more details.
   - name: p
-    content: To enable this option, send the /setinline command to @BotFather and provide the placeholder text that the user will see in the input field after typing your bot’s name.
+    content: To enable this option, send the /setinline command to @BotFather and provide the placeholder text that the user will see in the input field after typing your bot's name.
 - name: Payments
   children:
   - name: sendInvoice
@@ -3767,9 +4582,9 @@ children:
       content: Use this method to send invoices. On success, the sent Message is returned.
     table:
     - Parameter: chat_id
-      Type: Integer
+      Type: Integer or String
       Required: 'Yes'
-      Description: Unique identifier for the target private chat
+      Description: Unique identifier for the target chat or username of the target channel (in the format @channelusername)
     - Parameter: title
       Type: String
       Required: 'Yes'
@@ -3786,10 +4601,6 @@ children:
       Type: String
       Required: 'Yes'
       Description: Payments provider token, obtained via Botfather
-    - Parameter: start_parameter
-      Type: String
-      Required: 'Yes'
-      Description: Unique deep-linking parameter that can be used to generate this invoice when used as a start parameter
     - Parameter: currency
       Type: String
       Required: 'Yes'
@@ -3798,10 +4609,22 @@ children:
       Type: Array of LabeledPrice
       Required: 'Yes'
       Description: Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
+    - Parameter: max_tip_amount
+      Type: Integer
+      Required: Optional
+      Description: The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0
+    - Parameter: suggested_tip_amounts
+      Type: Array of Integer
+      Required: Optional
+      Description: A JSON-serialized array of suggested amounts of tips in the smallest units of the currency (integer, not float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed max_tip_amount.
+    - Parameter: start_parameter
+      Type: String
+      Required: Optional
+      Description: Unique deep-linking parameter. If left empty, forwarded copies of the sent message will have a Pay button, allowing multiple users to pay directly from the forwarded message, using the same invoice. If non-empty, forwarded copies of the sent message will have a URL button with a deep link to the bot (instead of a Pay button), with the value used as the start parameter
     - Parameter: provider_data
       Type: String
       Required: Optional
-      Description: JSON-encoded data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.
+      Description: A JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.
     - Parameter: photo_url
       Type: String
       Required: Optional
@@ -3854,6 +4677,10 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup
       Required: Optional
@@ -4370,10 +5197,14 @@ children:
       Type: Integer
       Required: Optional
       Description: If the message is a reply, ID of the original message
+    - Parameter: allow_sending_without_reply
+      Type: Boolean
+      Required: Optional
+      Description: Pass True, if the message should be sent even if the specified replied-to message is not found
     - Parameter: reply_markup
       Type: InlineKeyboardMarkup
       Required: Optional
-      Description: A JSON-serialized object for an inline keyboard. If empty, one ‘Play game_title’ button will be shown. If not empty, the first button must launch the game.
+      Description: A JSON-serialized object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game.
   - name: Game
     children: []
     desc:
@@ -4441,9 +5272,9 @@ children:
     children: []
     desc:
     - name: p
-      content: Use this method to get data for high score tables. Will return the score of the specified user and several of his neighbors in a game. On success, returns an Array of GameHighScore objects.
+      content: Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. On success, returns an Array of GameHighScore objects.
     - name: blockquote
-      content: This method will currently return scores for the target user, plus two of his closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.
+      content: This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.
     table:
     - Parameter: user_id
       Type: Integer
@@ -4467,7 +5298,7 @@ children:
     - name: p
       content: This object represents one row of the high scores table for a game.
     - name: p
-      content: And that‘s about all we’ve got for now.If you've got any questions, please check out our Bot FAQ »
+      content: And that's about all we've got for now.If you've got any questions, please check out our Bot FAQ »
     table:
     - Field: position
       Type: Integer
